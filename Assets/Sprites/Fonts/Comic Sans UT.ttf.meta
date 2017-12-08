@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 0476b2083f5fb9e43bdc0dfc82280e80
+timeCreated: 1504303437
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Comic Sans UT
+  fontNames:
+  - Comic Sans UT
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
