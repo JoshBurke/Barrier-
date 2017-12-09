@@ -5,6 +5,7 @@ using UnityEngine;
 public class Shield : MonoBehaviour {
     public Material NormalMat;
     public Material OverlappedMat;
+    public Material MagnetMat;
 
     public GameObject sword;
 
@@ -12,6 +13,7 @@ public class Shield : MonoBehaviour {
     private Renderer ren;
     private int swordOn;
     private bool isSwordEnabled;
+    private bool isMagnet;
 
     public static GameObject currSword;
 
@@ -67,6 +69,19 @@ public class Shield : MonoBehaviour {
                 }
             }
         }
+
+        if (isMagnet)
+        {
+            ren.material = MagnetMat;
+        }
+        else if (isOverlapped)
+        {
+            ren.material = OverlappedMat;
+        }
+        else if (!isOverlapped)
+        {
+            ren.material = NormalMat;
+        }
     }
 
     void OnTriggerEnter(Collider collider)
@@ -92,5 +107,20 @@ public class Shield : MonoBehaviour {
     public bool IsOverlapping()
     {
         return isOverlapped;
+    }
+
+    public bool getIsMagnet()
+    {
+        return isMagnet;
+    }
+
+    public void Magnetize()
+    {
+        isMagnet = true;
+    }
+
+    public void DeMagnetize()
+    {
+        isMagnet = false;
     }
 }

@@ -152,14 +152,7 @@ public class AILibrary : MonoBehaviour {
         healthBarHealth = GameObject.Find("Health");
         healthBar.SetActive(false);
         damageText = GameObject.Find("DamageText");
-        if(damageText == null)
-        {
-            print("damageText null");
-        } 
-        else
-        {
-            print("damageText not null");
-        }
+        print(damageText);
         damageText.GetComponent<TextMesh>().text = "";
         isSpeaking = false;
         domPressedThisFrame = false;
@@ -219,6 +212,12 @@ public class AILibrary : MonoBehaviour {
         //Transform attachShield = GameObject.Find("RightShield").transform;
         //activePlayerPointer = Instantiate(playerPointer, attachShield.position, attachShield.rotation, attachShield);
         activePlayerPointer = GameObject.Find("PlayerPointer(Clone)");
+        if(activePlayerPointer == null)
+        {
+            playerPointer = (GameObject)Resources.Load("PlayerPointer");
+            Transform attachShield = GameObject.Find("RightShield").transform;
+            activePlayerPointer = Instantiate(playerPointer, attachShield.position, attachShield.rotation, attachShield);
+        }
     }
 
     public void RegisterAttackButtons(GameObject a, GameObject m)
@@ -642,11 +641,12 @@ public class AILibrary : MonoBehaviour {
     }
 
     private void registerInitAttackPos()
-    {
+    {   /*
         print("registerAttack: " + fightButton.transform.localPosition);
         print("registerAttackRot: " + fightButton.transform.rotation);
         print("registerMercy: " + mercyButton.transform.localPosition);
         print("registerMercyRot: " + mercyButton.transform.rotation);
+        */
 
         initAttackButtonPos = fightButton.transform.localPosition;
         initAttackButtonRot = fightButton.transform.rotation;

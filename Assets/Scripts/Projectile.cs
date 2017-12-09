@@ -58,10 +58,22 @@ public class Projectile : MonoBehaviour
         }
         else if (other.tag == "Player")
         {
-            other.GetComponent<PlayerInfo>().Damage(Damage);
-            if (HitSound != null)
-                Instantiate(HitSound, transform.position, transform.rotation);
-            Object.Destroy(this.gameObject);
+            Debug.Log("Hit a player");
+            if (other.GetComponent<PlayerInfo>() != null)
+            {
+                other.GetComponent<PlayerInfo>().Damage(Damage);
+                if (HitSound != null)
+                    Instantiate(HitSound, transform.position, transform.rotation);
+                Object.Destroy(this.gameObject);
+            }
+            else
+            {
+                Debug.Log("hit newPlayer");
+                other.GetComponent<newPlayerInfo>().Damage(Damage);
+                if (HitSound != null)
+                    Instantiate(HitSound, transform.position, transform.rotation);
+                Object.Destroy(this.gameObject);
+            }
         }
     }
 }

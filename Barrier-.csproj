@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{3BD054CD-92C3-3E18-D2CD-8632D7B49CFE}</ProjectGuid>
+    <ProjectGuid>{2FC3321E-F75B-B443-E1BF-68B1D3420620}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AssemblyName>Assembly-CSharp</AssemblyName>
     <FileAlignment>512</FileAlignment>
@@ -55,8 +55,11 @@
     <Reference Include="UnityEngine">
       <HintPath>Library\UnityAssemblies\UnityEngine.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.Analytics">
-      <HintPath>Library\UnityAssemblies\UnityEngine.Analytics.dll</HintPath>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>Library\UnityAssemblies\UnityEngine.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Networking">
+      <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.TestRunner">
       <HintPath>Library\UnityAssemblies\UnityEngine.TestRunner.dll</HintPath>
@@ -64,14 +67,11 @@
     <Reference Include="nunit.framework">
       <HintPath>Library\UnityAssemblies\nunit.framework.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.Networking">
-      <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UI">
-      <HintPath>Library\UnityAssemblies\UnityEngine.UI.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEngine.Timeline">
       <HintPath>Library\UnityAssemblies\UnityEngine.Timeline.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Analytics">
+      <HintPath>Library\UnityAssemblies\UnityEngine.Analytics.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.HoloLens">
       <HintPath>Library\UnityAssemblies\UnityEngine.HoloLens.dll</HintPath>
@@ -129,6 +129,15 @@
     <Compile Include="Assets\OVR\Scripts\Util\OVRSceneSampleController.cs" />
     <Compile Include="Assets\OVR\Scripts\Util\OVRScreenFade.cs" />
     <Compile Include="Assets\OVR\Scripts\Util\OVRWaitCursor.cs" />
+    <Compile Include="Assets\PyroParticles\Demo\DemoScript.cs" />
+    <Compile Include="Assets\PyroParticles\Demo\DemoScriptEditor.cs" />
+    <Compile Include="Assets\PyroParticles\Prefab\Script\FireBaseScript.cs" />
+    <Compile Include="Assets\PyroParticles\Prefab\Script\FireCollisionForwardScript.cs" />
+    <Compile Include="Assets\PyroParticles\Prefab\Script\FireConstantBaseScript.cs" />
+    <Compile Include="Assets\PyroParticles\Prefab\Script\FireLightScript.cs" />
+    <Compile Include="Assets\PyroParticles\Prefab\Script\FireProjectileScript.cs" />
+    <Compile Include="Assets\PyroParticles\Prefab\Script\MeteorSwarmScript.cs" />
+    <Compile Include="Assets\PyroParticles\Prefab\Script\SingleLineAttribute.cs" />
     <Compile Include="Assets\SciFi level 2\Standard Assets\Character Controllers\Sources\Scripts\MouseLook.cs" />
     <Compile Include="Assets\SciFi level 2\Standard Assets\Image Effects (Pro Only)\BlurEffect.cs" />
     <Compile Include="Assets\SciFi level 2\Standard Assets\Image Effects (Pro Only)\ColorCorrectionEffect.cs" />
@@ -144,26 +153,42 @@
     <Compile Include="Assets\SciFi level 2\Standard Assets\Image Effects (Pro Only)\SSAOEffect.cs" />
     <Compile Include="Assets\SciFi level 2\Standard Assets\Image Effects (Pro Only)\TwirlEffect.cs" />
     <Compile Include="Assets\SciFi level 2\Standard Assets\Image Effects (Pro Only)\VortexEffect.cs" />
+    <Compile Include="Assets\Scripts\Ability.cs" />
     <Compile Include="Assets\Scripts\AILibrary.cs" />
     <Compile Include="Assets\Scripts\AlertPosition.cs" />
     <Compile Include="Assets\Scripts\BeamProjectile.cs" />
     <Compile Include="Assets\Scripts\BlasterSeries.cs" />
     <Compile Include="Assets\Scripts\CanonSeries.cs" />
+    <Compile Include="Assets\Scripts\ChangeScene.cs" />
     <Compile Include="Assets\Scripts\CrossheirScript.cs" />
     <Compile Include="Assets\Scripts\DebugParts.cs" />
+    <Compile Include="Assets\Scripts\DefensePowerups.cs" />
     <Compile Include="Assets\Scripts\DelayedKill.cs" />
     <Compile Include="Assets\Scripts\DudBlasterSeries.cs" />
     <Compile Include="Assets\Scripts\ElasticHUDScript.cs" />
     <Compile Include="Assets\Scripts\flush.cs" />
+    <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\GrabScript.cs" />
+    <Compile Include="Assets\Scripts\Interactable.cs" />
     <Compile Include="Assets\Scripts\LightningAI.cs" />
+    <Compile Include="Assets\Scripts\MagicPowerups.cs" />
     <Compile Include="Assets\Scripts\MainMenuScript.cs" />
     <Compile Include="Assets\Scripts\MenuButtonHighligher.cs" />
+    <Compile Include="Assets\Scripts\MenuChoice.cs" />
+    <Compile Include="Assets\Scripts\NewBossAI.cs" />
+    <Compile Include="Assets\Scripts\NewPlayerHealthDisplay.cs" />
+    <Compile Include="Assets\Scripts\newPlayerInfo.cs" />
+    <Compile Include="Assets\Scripts\NewTheme.cs" />
     <Compile Include="Assets\Scripts\PapyrusAI.cs" />
     <Compile Include="Assets\Scripts\PlayerHealthDisplay.cs" />
     <Compile Include="Assets\Scripts\PlayerInfo.cs" />
     <Compile Include="Assets\Scripts\PlayerProjectile.cs" />
     <Compile Include="Assets\Scripts\Projectile.cs" />
+    <Compile Include="Assets\Scripts\RadialButton_old.cs" />
+    <Compile Include="Assets\Scripts\RadialMenu.cs" />
+    <Compile Include="Assets\Scripts\RadialMenu_old.cs" />
+    <Compile Include="Assets\Scripts\RadialMenuHandler.cs" />
+    <Compile Include="Assets\Scripts\RadialMenuSpawner_old.cs" />
     <Compile Include="Assets\Scripts\SansAI.cs" />
     <Compile Include="Assets\Scripts\Shield.cs" />
     <Compile Include="Assets\Scripts\Spawner.cs" />

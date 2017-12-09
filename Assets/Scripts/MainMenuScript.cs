@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MainMenuScript : MonoBehaviour {
 
@@ -31,6 +32,9 @@ public class MainMenuScript : MonoBehaviour {
     private MenuButtonHighligher cheatButtonHighlighter;
     private GameObject megaCheatButton;
     private MenuButtonHighligher megaCheatButtonHighlighter;*/
+
+    private GameObject NewBossButton;		
+    private MenuButtonHighligher NewBossButtonHighlighter;
 
     private GameObject upButton;
     private MenuButtonHighligher upButtonHighlighter;
@@ -116,6 +120,9 @@ public class MainMenuScript : MonoBehaviour {
         cheatButtonHighlighter = cheatButton.GetComponent<MenuButtonHighligher>();
         megaCheatButton = transform.Find("MegaCheatButton").gameObject;
         megaCheatButtonHighlighter = megaCheatButton.GetComponent<MenuButtonHighligher>();*/
+
+        NewBossButton = transform.Find("NewBossButton").gameObject;
+        NewBossButtonHighlighter = NewBossButton.GetComponent<MenuButtonHighligher>();
 
         upButton = transform.Find("UpButton").gameObject;
         upButtonHighlighter = upButton.GetComponent<MenuButtonHighligher>();
@@ -250,6 +257,8 @@ public class MainMenuScript : MonoBehaviour {
         //cheatButton.SetActive(true);
         //megaCheatButton.SetActive(true);
 
+        NewBossButton.SetActive(true);
+
         // <Robert>
         lightningButton.SetActive(true);
         creditsButton.SetActive(true);
@@ -259,7 +268,7 @@ public class MainMenuScript : MonoBehaviour {
         upButton.SetActive(true);
         downButton.SetActive(true);
 
-        //godButton.SetActive(true);
+        godButton.SetActive(true);
         if(killedCount == 0)
             papyrusKillButton.SetActive(true);
         else if(killedCount == 1)
@@ -362,6 +371,14 @@ public class MainMenuScript : MonoBehaviour {
                     GameObject p = (GameObject)Instantiate(Resources.Load("Papyrus"));
                     p.GetComponent<AILibrary>().RegisterAttackButtons(fightButton, mercyButton);
                 }
+                else if (NewBossButtonHighlighter.IsHovered())
+                {
+                    closeMenu();
+                    enemyFought = 0;
+                    SceneManager.LoadScene(1);
+                    GameObject n = (GameObject)Instantiate(Resources.Load("NewBoss"));
+                    n.GetComponent<AILibrary>().RegisterAttackButtons(fightButton, mercyButton);
+                }
                 else if (undyneButtonHighlighter.IsHovered())
                 {
                     closeMenu();
@@ -395,7 +412,8 @@ public class MainMenuScript : MonoBehaviour {
                 {
                     nudgeMenu(-1.0f);
                 }
-                /*else if(cheatButtonHighlighter.IsHovered())
+                /*
+                else if(cheatButtonHighlighter.IsHovered())
                 {
                     killedCount = 1;
                     playerInfo.MaxHealth = 120;
@@ -528,6 +546,9 @@ public class MainMenuScript : MonoBehaviour {
         sansButton.SetActive(false);
         quitButtonHighlighter.ForceDeselect();
         quitButton.SetActive(false);
+
+        NewBossButtonHighlighter.ForceDeselect();
+        NewBossButton.SetActive(false);
 
         upButton.SetActive(false);
         upButtonHighlighter.ForceDeselect();

@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{A8140C49-61F6-1301-F6DF-A5BA168A74BE}</ProjectGuid>
+    <ProjectGuid>{8C11C235-D885-A84C-5A52-AF20A588492D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AssemblyName>Assembly-CSharp-Editor</AssemblyName>
     <FileAlignment>512</FileAlignment>
@@ -156,9 +156,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="Barrier_updated.csproj">
-      <Project>{3BD054CD-92C3-3E18-D2CD-8632D7B49CFE}</Project>
-      <Name>Barrier_updated</Name>
+    <ProjectReference Include="Barrier--master.csproj">
+      <Project>{2FC3321E-F75B-B443-E1BF-68B1D3420620}</Project>
+      <Name>Barrier--master</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -166,6 +166,7 @@
     <Compile Include="Assets\OVR\Editor\OVRManifestPreprocessor.cs" />
     <Compile Include="Assets\OVR\Editor\OVRMoonlightLoader.cs" />
     <Compile Include="Assets\OVR\Editor\OVRScreenshotWizard.cs" />
+    <Compile Include="Assets\PyroParticles\Prefab\Editor\PyroParticlesEditor.cs" />
     <Compile Include="Assets\VolumetricLines\Scripts\Editor\ExposeProperties.cs" />
     <Compile Include="Assets\VolumetricLines\Scripts\Editor\VolumetricLineBehaviorEditor.cs" />
     <Compile Include="Assets\VolumetricLines\Scripts\Editor\VolumetricLineStripBehaviorEditor.cs" />
