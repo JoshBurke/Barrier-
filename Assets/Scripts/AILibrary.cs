@@ -46,6 +46,15 @@ public class AILibrary : MonoBehaviour {
     private float playerAttackStartTime;
     private bool isAttackMenuLive;
     private bool isPlayerAttacking;
+    // <Robert>
+    private bool crossheirActive;
+    private bool allowFire;
+    private bool fightDone;
+    private float dingTime;
+    private bool lightning;
+    private bool speechBubbleActive;
+    private bool setAttackPos;
+    // </Robert>
     private bool isAttackTimeFrozen;
     private float frozenAttackTime;
     private bool isPlayerShotLive;
@@ -57,6 +66,7 @@ public class AILibrary : MonoBehaviour {
     private bool forcePlayerMiss;
     private GameObject enemyBody;
     private GameObject activePlayerPointer;
+    private GameObject playerPointer;
 
     private GameObject fightButton;
     private MenuButtonHighligher fightButtonHighlighter;
@@ -115,31 +125,64 @@ public class AILibrary : MonoBehaviour {
     private Vector3 spareStartPos;
     private Vector3 spareEndPos;
 
-        // Variables to facilitate Sans' fight functionality
+    // Variables to facilitate Sans' fight functionality
     private bool preventPlayerShot;
     private bool forceLethalHit;
 
+    public GameObject ding;
+
     public void Start()
     {
+        Debug.Log("start");
         enemy = GameObject.FindGameObjectWithTag("Enemy");
         enemySprite = enemy.transform.Find("BodySprite").GetComponent<SpriteRenderer>();
         waitingForProjectiles = false;
         waitingForMusicFade = false;
         isAttackMenuLive = false;
         isPlayerAttacking = false;
+        crossheirActive = false;
+        allowFire = false;
+        fightDone = false;
+        lightning = false;
+        setAttackPos = false;
+        speechBubbleActive = true;
         speechObj = transform.Find("BodySprite").Find("SpeechBubbleSprite").GetComponent<Speech>();
         enemyBody = transform.Find("BodySprite").gameObject;
         healthBar = GameObject.Find("HealthBar");
         healthBarHealth = GameObject.Find("Health");
         healthBar.SetActive(false);
         damageText = GameObject.Find("DamageText");
+        if(damageText == null)
+        {
+            print("damageText null");
+        } 
+        else
+        {
+            print("damageText not null");
+        }
         damageText.GetComponent<TextMesh>().text = "";
         isSpeaking = false;
         domPressedThisFrame = false;
         domPressed = false;
         speechQueue = new Queue<SpeechEntry>();
-        player = GameObject.FindGameObjectWithTag("Player");
+        player = GameObject.Find("OVRPlayerController");
+        if(player == null)
+        {
+            print("player is null");
+        }
+        else
+        {
+            print("player is not null");
+        }
         playerController = player.GetComponent<OVRPlayerController>();
+        if(playerController == null)
+        {
+            print("error");
+        }
+        else
+        {
+            print("fine");
+        }
         isPlayerShotLive = false;
         isLerpingHealthBar = false;
         forcePlayerMiss = false;
@@ -147,6 +190,7 @@ public class AILibrary : MonoBehaviour {
         enemyDodgeTime = 2.0f;
         isEnemyDodging = false;
         enemyDodgeDistance = 2.0f;
+        dingTime = Time.fixedTime + 1.0f;
 
         enemyInitPos = enemySprite.transform.position;
 
@@ -156,8 +200,8 @@ public class AILibrary : MonoBehaviour {
         /*fightButton = GameObject.Find("AttackButton");
         fightButtonHighlighter = fightButton.GetComponent<MenuButtonHighligher>();
         mercyButton = GameObject.Find("MercyButton");
-        mercyButtonHighlighter = mercyButton.GetComponent<MenuButtonHighligher>();
-        Invoke("hideButtons", 0.01f);*/
+        mercyButtonHighlighter = mercyButton.GetComponent<MenuButtonHighligher>();*/
+        Invoke("hideButtons", 0.01f);
 
         isPitchFading = isMusicFading = false;
         lerpingMenuButtons = startedButtonLerp = isFinishing = false;
@@ -166,10 +210,15 @@ public class AILibrary : MonoBehaviour {
         liveColor = new Color(1.0f, 1.0f, 1.0f, 1.0f);
         deadColor = new Color(1.0f, 1.0f, 1.0f, 0.0f);
 
+
         //initAttackButtonPos = initAttackButtonRot = finalAttackButtonPos = finalAttackButtonRot = null;
         //initMercyButtonPos = initMercyButtonRot = finalMercyButtonPos = finalMercyButtonRot = null;
 
         immediateAttackCallback = null;
+        //playerPointer = (GameObject)Resources.Load("PlayerPointer");
+        //Transform attachShield = GameObject.Find("RightShield").transform;
+        //activePlayerPointer = Instantiate(playerPointer, attachShield.position, attachShield.rotation, attachShield);
+        activePlayerPointer = GameObject.Find("PlayerPointer(Clone)");
     }
 
     public void RegisterAttackButtons(GameObject a, GameObject m)
@@ -238,9 +287,9 @@ public class AILibrary : MonoBehaviour {
 
     private void projectileCallbackManager()
     {
-        if(waitingForProjectiles)
+        if (waitingForProjectiles)
         {
-            if(GameObject.FindGameObjectWithTag("Projectile") == null)
+            if (GameObject.FindGameObjectWithTag("Projectile") == null)
             {
                 waitingForProjectiles = false;
                 waitProjectilesCallback();
@@ -250,96 +299,164 @@ public class AILibrary : MonoBehaviour {
 
     private void playerAttackManager()
     {
-        if(isLerpingHealthBar)
+        if (lightning)
         {
-            Vector3 startScale = healthBarHealth.transform.localScale;
-            float lerpFactor = Mathf.Min((Time.fixedTime - lerpStartTime) / 2.0f, 1.0f);
-            healthBarHealth.transform.localScale = new Vector3(Mathf.Lerp((startLerpHealth / maxHealth), health / maxHealth, lerpFactor), startScale.y, startScale.z);
-            if(lerpFactor == 1.0f)
+            if (isLerpingHealthBar)
             {
-                isLerpingHealthBar = false;
-                Invoke("hideHealthBar", 2.0f);
+                Vector3 startScale = healthBarHealth.transform.localScale;
+                float lerpFactor = Mathf.Min((Time.fixedTime - lerpStartTime) / 2.0f, 1.0f);
+                healthBarHealth.transform.localScale = new Vector3(Mathf.Lerp((startLerpHealth / maxHealth), health / maxHealth, lerpFactor), startScale.y, startScale.z);
+                if (lerpFactor == 1.0f)
+                {
+                    isLerpingHealthBar = false;
+                    Invoke("hideHealthBar", 0.0f);
+                }
+            }
+            if (isPlayerShotLive)
+            {
+                /*
+                if(isFadingCrossheirs)
+                {
+                    float lerpFactor = Mathf.Min((Time.fixedTime - crossheirFadeStartTime) / crossheirFadeTime, 1.0f);
+                    leftCrossheirRenderer.color = rightCrossheirRenderer.color = new Color(1.0f, 1.0f, 1.0f, 1.0f - lerpFactor);
+                    if(lerpFactor == 1.0f)
+                    {
+                        isFadingCrossheirs = false;
+                    }
+                }
+                */
+                if (isEnemyDodging)
+                {
+                    float lerpFactor = Mathf.Min((Time.fixedTime - enemyDodgeStartTime) / enemyDodgeTime, 1.0f);
+                    enemyBody.transform.position = enemyInitPos + new Vector3(Mathf.Sin(lerpFactor * Mathf.PI) * enemyDodgeDistance, 0, 0);
+                    if (lerpFactor == 1.0f)
+                    {
+                        isEnemyDodging = false;
+                    }
+                }
+                if (playerShot == null)
+                {
+                    dingTime = Time.fixedTime + 1.0f;
+                    isPlayerAttacking = false;
+                    isPlayerShotLive = false;
+                    isAttackTimeFrozen = false;
+                    //Object.Destroy(leftCrossheir);
+                    //Object.Destroy(rightCrossheir);
+                    Invoke("clearDamageText", 3.0f);
+                    if (attackCallback != null)
+                        attackCallback();
+                }
+            }
+            else if (!isSpeaking && allowFire && !speechBubbleActive && domPressedThisFrame)
+            {
+                lightningPlayerFire();
+            }
+            else if (!fightDone && !allowFire && Time.fixedTime > dingTime)
+            {
+                allowFire = true;
+                if (ding != null)
+                {
+                    Instantiate(ding, transform.position, transform.rotation);
+                }
             }
         }
-        if (lerpingMenuButtons)
+        else if (!lightning)
         {
-            float lerpFactor = Mathf.Min(Mathf.Sin(((Time.fixedTime - menuButtonLerpStartTime) / 6.0f) * (Mathf.PI / 2.0f)), 1.0f);
-            fightButton.transform.localPosition = Vector3.Lerp(initAttackButtonPos, finalAttackButtonPos, lerpFactor);
-            fightButton.transform.rotation = Quaternion.Lerp(initAttackButtonRot, finalAttackButtonRot, lerpFactor);
+            if (isLerpingHealthBar)
+            {
+                Vector3 startScale = healthBarHealth.transform.localScale;
+                float lerpFactor = Mathf.Min((Time.fixedTime - lerpStartTime) / 2.0f, 1.0f);
+                healthBarHealth.transform.localScale = new Vector3(Mathf.Lerp((startLerpHealth / maxHealth), health / maxHealth, lerpFactor), startScale.y, startScale.z);
+                if (lerpFactor == 1.0f)
+                {
+                    isLerpingHealthBar = false;
+                    Invoke("hideHealthBar", 2.0f);
+                }
+            }
+            if (lerpingMenuButtons)
+            {
+                float lerpFactor = Mathf.Min(Mathf.Sin(((Time.fixedTime - menuButtonLerpStartTime) / 6.0f) * (Mathf.PI / 2.0f)), 1.0f);
+                fightButton.transform.localPosition = Vector3.Lerp(initAttackButtonPos, finalAttackButtonPos, lerpFactor);
+                fightButton.transform.rotation = Quaternion.Lerp(initAttackButtonRot, finalAttackButtonRot, lerpFactor);
 
-            mercyButton.transform.localPosition = Vector3.Lerp(initMercyButtonPos, finalMercyButtonPos, lerpFactor);
-            mercyButton.transform.rotation = Quaternion.Lerp(initMercyButtonRot, finalMercyButtonRot, lerpFactor);
+                mercyButton.transform.localPosition = Vector3.Lerp(initMercyButtonPos, finalMercyButtonPos, lerpFactor);
+                mercyButton.transform.rotation = Quaternion.Lerp(initMercyButtonRot, finalMercyButtonRot, lerpFactor);
 
-            if(lerpFactor == 1.0f)
-            {
-                lerpingMenuButtons = false;
-            }
-        }
-        if (isAttackMenuLive)
-        {
-            if(domPressedThisFrame)
-            {
-                if(fightButtonHighlighter.IsHovered())
+                if (lerpFactor == 1.0f)
                 {
-                    closeAttackMenu();
-                    onAttackButtonPress();
-                    return;
-                }
-                else if(mercyButtonHighlighter.IsHovered())
-                {
-                    closeAttackMenu();
-                    onMercyButtonPress();
-                    return;
+                    lerpingMenuButtons = false;
                 }
             }
-        }
-        if (!isPlayerAttacking)
-            return;
-        if(isPlayerShotLive)
-        {
-            if(isFadingCrossheirs)
+            if (isAttackMenuLive)
             {
-                float lerpFactor = Mathf.Min((Time.fixedTime - crossheirFadeStartTime) / crossheirFadeTime, 1.0f);
-                leftCrossheirRenderer.color = rightCrossheirRenderer.color = new Color(1.0f, 1.0f, 1.0f, 1.0f - lerpFactor);
-                if(lerpFactor == 1.0f)
+                if (domPressedThisFrame)
                 {
-                    isFadingCrossheirs = false;
+                    if (fightButtonHighlighter.IsHovered())
+                    {
+                        closeAttackMenu();
+                        onAttackButtonPress();
+                        return;
+                    }
+                    else if (mercyButtonHighlighter.IsHovered())
+                    {
+                        closeAttackMenu();
+                        onMercyButtonPress();
+                        return;
+                    }
                 }
             }
-            if(isEnemyDodging)
+            if (!isPlayerAttacking)
+                return;
+
+            if (isPlayerShotLive)
             {
-                float lerpFactor = Mathf.Min((Time.fixedTime - enemyDodgeStartTime) / enemyDodgeTime, 1.0f);
-                enemyBody.transform.position = enemyInitPos + new Vector3(Mathf.Sin(lerpFactor * Mathf.PI) * enemyDodgeDistance, 0 , 0);
-                if(lerpFactor == 1.0f)
+                /*
+                if(isFadingCrossheirs)
                 {
-                    isEnemyDodging = false;
+                    float lerpFactor = Mathf.Min((Time.fixedTime - crossheirFadeStartTime) / crossheirFadeTime, 1.0f);
+                    leftCrossheirRenderer.color = rightCrossheirRenderer.color = new Color(1.0f, 1.0f, 1.0f, 1.0f - lerpFactor);
+                    if(lerpFactor == 1.0f)
+                    {
+                        isFadingCrossheirs = false;
+                    }
+                }
+                */
+                if (isEnemyDodging)
+                {
+                    float lerpFactor = Mathf.Min((Time.fixedTime - enemyDodgeStartTime) / enemyDodgeTime, 1.0f);
+                    enemyBody.transform.position = enemyInitPos + new Vector3(Mathf.Sin(lerpFactor * Mathf.PI) * enemyDodgeDistance, 0, 0);
+                    if (lerpFactor == 1.0f)
+                    {
+                        isEnemyDodging = false;
+                    }
+                }
+                if (playerShot == null)
+                {
+                    dingTime = Time.fixedTime + 1.0f;
+                    isPlayerAttacking = false;
+                    isPlayerShotLive = false;
+                    isAttackTimeFrozen = false;
+                    Object.Destroy(leftCrossheir);
+                    Object.Destroy(rightCrossheir);
+                    Invoke("clearDamageText", 3.0f);
+                    if (attackCallback != null)
+                        attackCallback();
                 }
             }
-            if(playerShot == null)
+            else if (domPressedThisFrame)
             {
-                isPlayerAttacking = false;
-                isPlayerShotLive = false;
-                isAttackTimeFrozen = false;
-                Object.Destroy(leftCrossheir);
-                Object.Destroy(rightCrossheir);
-                Invoke("clearDamageText", 3.0f);
-                if(attackCallback != null)
-                    attackCallback();
+                playerFire();
             }
-        }
-        else if(domPressedThisFrame)
-        {
-            playerFire();
         }
     }
 
     private void musicFadeManager()
     {
-        if(isPitchFading)
+        if (isPitchFading)
         {
             float lerpF = Mathf.Min((Time.fixedTime - pitchFadeStartTime) / pitchFadeTime, 1.0f);
             playerController.SetMusicPitch(Mathf.Lerp(pitchFadeStartPitch, pitchFadeEndPitch, lerpF));
-            if(lerpF == 1.0f)
+            if (lerpF == 1.0f)
             {
                 isPitchFading = false;
             }
@@ -378,7 +495,7 @@ public class AILibrary : MonoBehaviour {
                 isDead = true;
             }
         }
-        else if(isSparing)
+        else if (isSparing)
         {
             float lerpFactor = Mathf.Min((Time.fixedTime - spareStartTime) / 3.0f, 1.0f);
             enemySprite.color = Color.Lerp(liveColor, deadColor, lerpFactor);
@@ -401,7 +518,7 @@ public class AILibrary : MonoBehaviour {
 
     private void cleanUp()
     {
-        if(initAttackButtonPos != null)
+        if (initAttackButtonPos != null)
         {
             resetAttackButtons();
         }
@@ -419,10 +536,21 @@ public class AILibrary : MonoBehaviour {
         forcePlayerMiss = miss;
     }
 
+    public void DisallowFire()
+    {
+        allowFire = false;
+        fightDone = true;
+    }
+
+    public void DestroyCrossheir()
+    {
+        Object.Destroy(leftCrossheir);
+    }
+
     public void DestroyProjectiles()
     {
         GameObject[] projs = GameObject.FindGameObjectsWithTag("Projectile");
-        foreach(GameObject p in projs)
+        foreach (GameObject p in projs)
         {
             GameObject.Destroy(p);
         }
@@ -443,6 +571,42 @@ public class AILibrary : MonoBehaviour {
         forceLethalHit = isLethal;
     }
 
+    /*public void createPointer()
+    {
+        if (activePlayerPointer == null)
+        {
+            Transform attachShield = GameObject.Find("RightShield").transform;
+            activePlayerPointer = (GameObject)Instantiate(Resources.Load("PlayerPointer"), attachShield.position, attachShield.rotation, attachShield);
+            //destroySword();
+        }
+    }*/
+
+    /*public void destroyPointer()
+    {
+        if (activePlayerPointer != null)
+        {
+            Destroy(activePlayerPointer);
+        }
+    }*/
+
+    /*public void createSword()
+    {
+        if(activePlayerSword == null)
+        {
+            activePlayerSword = GameObject.Find("PlayerSword");
+        }
+        activePlayerSword.SetActive(true);
+        destroyPointer();
+    }*/
+
+    /*public void destroySword()
+    {
+        if(activePlayerSword != null)
+        {
+            activePlayerSword.SetActive(false);
+        }
+    }*/
+
     public void Die(bool overrideSpriteFade = false, float timeToCleanup = 4.0f)
     {
         Instantiate(Resources.Load("Die"), player.transform.position, player.transform.rotation);   // Sound effect
@@ -456,6 +620,7 @@ public class AILibrary : MonoBehaviour {
             Invoke("cleanUp", timeToCleanup);
             isDead = true;
         }
+        //createSword();
     }
 
     public void Spare()
@@ -478,6 +643,11 @@ public class AILibrary : MonoBehaviour {
 
     private void registerInitAttackPos()
     {
+        print("registerAttack: " + fightButton.transform.localPosition);
+        print("registerAttackRot: " + fightButton.transform.rotation);
+        print("registerMercy: " + mercyButton.transform.localPosition);
+        print("registerMercyRot: " + mercyButton.transform.rotation);
+
         initAttackButtonPos = fightButton.transform.localPosition;
         initAttackButtonRot = fightButton.transform.rotation;
         initMercyButtonPos = mercyButton.transform.localPosition;
@@ -496,24 +666,52 @@ public class AILibrary : MonoBehaviour {
 
     private void playerFire()
     {
+        allowFire = false;
         frozenAttackTime = Time.fixedTime - playerAttackStartTime;
         playerShot = (GameObject)Instantiate(Resources.Load("PlayerShot"), activePlayerPointer.transform.position, activePlayerPointer.transform.rotation);
-        Object.Destroy(activePlayerPointer);
-        activePlayerPointer = null;
+        //Object.Destroy(activePlayerPointer);
+        //activePlayerPointer = null;
         isPlayerShotLive = true;
-        if(forcePlayerMiss)
+        if (forcePlayerMiss)
         {
             isFadingCrossheirs = true;
             isEnemyDodging = true;
-            if(Random.value > 0.5f) // Randomize the dodge direction
+            if (Random.value > 0.5f) // Randomize the dodge direction
             {
                 enemyDodgeDistance *= -1;
             }
             enemyDodgeStartTime = crossheirFadeStartTime = Time.fixedTime;
         }
         else
-            isAttackTimeFrozen = true;
-        if(immediateAttackCallback != null)
+        isAttackTimeFrozen = true;
+        if (immediateAttackCallback != null)
+        {
+            immediateAttackCallback();
+            immediateAttackCallback = null;
+        }
+    }
+
+    private void lightningPlayerFire()
+    {
+        allowFire = false;
+        frozenAttackTime = Time.fixedTime - playerAttackStartTime;
+        playerShot = (GameObject)Instantiate(Resources.Load("PlayerShot"), activePlayerPointer.transform.position, activePlayerPointer.transform.rotation);
+        // Object.Destroy(activePlayerPointer);
+        // activePlayerPointer = null;
+        isPlayerShotLive = true;
+        if (forcePlayerMiss)
+        {
+            isFadingCrossheirs = true;
+            isEnemyDodging = true;
+            if (Random.value > 0.5f) // Randomize the dodge direction
+            {
+                enemyDodgeDistance *= -1;
+            }
+            enemyDodgeStartTime = crossheirFadeStartTime = Time.fixedTime;
+        }
+        else
+        //isAttackTimeFrozen = true;
+        if (immediateAttackCallback != null)
         {
             immediateAttackCallback();
             immediateAttackCallback = null;
@@ -547,8 +745,8 @@ public class AILibrary : MonoBehaviour {
     private void openAttackMenu(bool finisher, bool ignoreMercyHandle = false)
     {
         isAttackMenuLive = true;
-        Transform attachShield = GameObject.Find("RightShield").transform;
-        activePlayerPointer = (GameObject)Instantiate(Resources.Load("PlayerPointer"), attachShield.position, attachShield.rotation, attachShield);
+        //Transform attachShield = GameObject.Find("RightShield").transform;
+        //activePlayerPointer = (GameObject)Instantiate(Resources.Load("PlayerPointer"), attachShield.position, attachShield.rotation, attachShield);
         fightButton.SetActive(true);
         if(ignoreMercyHandle)
             mercyButtonHighlighter.SetEnabled(finisher);
@@ -608,8 +806,8 @@ public class AILibrary : MonoBehaviour {
         {
             //resetAttackButtons();
         }
-        Object.Destroy(activePlayerPointer);
-        activePlayerPointer = null;
+        //Object.Destroy(activePlayerPointer);
+        //activePlayerPointer = null;
         mercyCallback();
     }
 
@@ -623,8 +821,8 @@ public class AILibrary : MonoBehaviour {
         if (preventPlayerShot)
         {
             preventPlayerShot = false;
-            Object.Destroy(activePlayerPointer);
-            activePlayerPointer = null;
+            //Object.Destroy(activePlayerPointer);
+            //activePlayerPointer = null;
             //resetAttackButtons();
             attackCallback();
             return;
@@ -651,9 +849,23 @@ public class AILibrary : MonoBehaviour {
         isPlayerAttacking = true;
     }
 
+    
+    public void lightningAttack(OnAttackEndEvent callback)
+    {
+        crossheirActive = true;
+        attackCallback = callback;
+        playerAttackStartTime = Time.fixedTime;
+        domPressedThisFrame = false;
+        isPlayerAttacking = true;
+    }
+    
+
     public void GiveRawDamage(float damage)
     {
-        damage -= Mathf.Abs(leftCrossheir.transform.position.x - rightCrossheir.transform.position.x) * 0.4f;
+        if (!lightning)
+        {
+            damage -= Mathf.Abs(leftCrossheir.transform.position.x - rightCrossheir.transform.position.x) * 0.4f;
+        }
         Damage(damage);
     }
 
@@ -828,5 +1040,32 @@ public class AILibrary : MonoBehaviour {
     public static bool GetDominantGripDown()
     {
         return OVRInput.Get(OVRInput.RawButton.RHandTrigger);
+    }
+
+    public void SetLightning()
+    {
+        lightning = true;
+
+        float parentScaleX = enemyBody.transform.localScale.x;
+        float parentScaleY = enemyBody.transform.localScale.y;
+        float baseScale = 0.1f;
+        leftCrossheir = GameObject.Instantiate((GameObject)Resources.Load("Crossheir"), enemyBody.transform.position, enemyBody.transform.rotation, enemyBody.transform);
+        leftCrossheirRenderer = leftCrossheir.GetComponent<SpriteRenderer>();
+        leftCrossheir.transform.localScale = new Vector3(baseScale / parentScaleX, baseScale / parentScaleY, 1.0f);
+        leftCrossheir.GetComponent<CrossheirScript>().RegisterLightningLibrary(this, false);
+
+        initAttackButtonPos = new Vector3(0f, 0.3f, 1f);
+        initAttackButtonRot = new Quaternion(0.2f, 0f, 0f, 1f);
+        initMercyButtonPos = new Vector3(0.5f, 0.1f, 0.7f);
+        initMercyButtonRot = new Quaternion(0.3f, 0.2f, -0.1f, 0.9f);
+
+        //createPointer();
+        //activePlayerPointer.layer = 9;
+        //activePlayerPointer.tag = "Untagged";
+    }
+
+    public void setSpeechBubbleActive(bool val)
+    {
+        speechBubbleActive = val;
     }
 }

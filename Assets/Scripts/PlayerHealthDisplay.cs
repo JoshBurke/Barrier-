@@ -12,6 +12,7 @@ public class PlayerHealthDisplay : MonoBehaviour {
         healthText = transform.Find("HealthText").GetComponent<TextMesh>();
         bar = transform.Find("Bar").gameObject;
         playerInfo = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInfo>();
+        //playerInfo = GameObject.Find("OVRPlayerController").GetComponent<PlayerInfo>();
         maxHealth = playerInfo.GetMaxHealth();
 	}
 	

@@ -30,7 +30,7 @@ public class UndyneAI : MonoBehaviour
         playerInfo = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInfo>();
 
         lib.RegisterCrossheirPositionFunc(CrossheirPosition);
-        lib.SetVitals(300.0f);
+        lib.SetVitals(1.0f);
         //lib.SetVitals(11.0f);
         turnCount = 0;
     }
@@ -219,8 +219,8 @@ public class UndyneAI : MonoBehaviour
         lib.fadeEnemy();
         float delay = 0.35f;
         float offset = -0.9f;
-        float gast1 = 8.0f * delay - 0.3f;
-        float gast2 = gast1 + 3.0f + 7.0f * delay;
+        float gast1 = 8.0f * delay;
+        float gast2 = gast1 + 3.3f + 7.0f * delay;
         doubleTapBlast2_Phase1();
         Invoke("doubleTapBlast2_Phase2", 1.0f * delay);
         Invoke("doubleTapBlast2_Phase1", 2.0f * delay);
@@ -230,14 +230,14 @@ public class UndyneAI : MonoBehaviour
         Invoke("doubleTapBlast2_Phase1", 6.0f * delay);
         Invoke("doubleTapBlast2_Phase2", 7.0f * delay);
         Invoke("doubleTapBlast2_LGaster", gast1);
-        Invoke("doubleTapBlast2_Phase1", gast1 + 8.0f * delay + offset);
-        Invoke("doubleTapBlast2_Phase2", gast1 + 9.0f * delay + offset);
-        Invoke("doubleTapBlast2_Phase1", gast1 + 10.0f * delay + offset);
-        Invoke("doubleTapBlast2_Phase2", gast1 + 11.0f * delay + offset);
-        Invoke("doubleTapBlast2_Phase1", gast1 + 12.0f * delay + offset);
-        Invoke("doubleTapBlast2_Phase2", gast1 + 13.0f * delay + offset);
-        Invoke("doubleTapBlast2_Phase1", gast1 + 14.0f * delay + offset);
-        Invoke("doubleTapBlast2_Phase2", gast1 + 15.0f * delay + offset);
+        Invoke("doubleTapBlast2_Phase1", gast1 + 8.3f * delay + offset);
+        Invoke("doubleTapBlast2_Phase2", gast1 + 9.3f * delay + offset);
+        Invoke("doubleTapBlast2_Phase1", gast1 + 10.3f * delay + offset);
+        Invoke("doubleTapBlast2_Phase2", gast1 + 11.3f * delay + offset);
+        Invoke("doubleTapBlast2_Phase1", gast1 + 12.3f * delay + offset);
+        Invoke("doubleTapBlast2_Phase2", gast1 + 13.3f * delay + offset);
+        Invoke("doubleTapBlast2_Phase1", gast1 + 14.3f * delay + offset);
+        Invoke("doubleTapBlast2_Phase2", gast1 + 15.3f * delay + offset);
         Invoke("doubleTapBlast2_RGaster", gast2 + offset);
         lib.WaitForProjectiles(playerTurn);
     }

@@ -53,6 +53,7 @@ public class PlayerInfo : MonoBehaviour {
             return; // Nope.
         }
         health -= amount;
+        health = Mathf.Min(health, MaxHealth);
         health = Mathf.Max(health, 0);
         if (health == 0)
         {

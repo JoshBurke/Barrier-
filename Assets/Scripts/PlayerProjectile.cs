@@ -32,8 +32,11 @@ public class PlayerProjectile : MonoBehaviour
     {
         if (Time.fixedTime - startTime > MaxLifetime)
         {
-            damageText.GetComponent<TextMesh>().text = "Miss";
-            Object.Destroy(this.gameObject);
+            if (damageText != null)
+            {
+                damageText.GetComponent<TextMesh>().text = "Miss";
+                Object.Destroy(this.gameObject);
+            }
         }
         else
             transform.Translate(Vector3.forward * Speed * Time.deltaTime);
