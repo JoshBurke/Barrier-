@@ -130,10 +130,11 @@ public class AILibrary : MonoBehaviour {
     private bool forceLethalHit;
 
     public GameObject ding;
+    public string attackMethod;
 
     public void Start()
     {
-        Debug.Log("start");
+        //Debug.Log("start");
         enemy = GameObject.FindGameObjectWithTag("Enemy");
         enemySprite = enemy.transform.Find("BodySprite").GetComponent<SpriteRenderer>();
         waitingForProjectiles = false;
@@ -152,13 +153,15 @@ public class AILibrary : MonoBehaviour {
         healthBarHealth = GameObject.Find("Health");
         healthBar.SetActive(false);
         damageText = GameObject.Find("DamageText");
-        print(damageText);
+        //print(damageText);
         damageText.GetComponent<TextMesh>().text = "";
         isSpeaking = false;
         domPressedThisFrame = false;
         domPressed = false;
         speechQueue = new Queue<SpeechEntry>();
         player = GameObject.Find("OVRPlayerController");
+        attackMethod = "PlayerShot";
+        /*
         if(player == null)
         {
             print("player is null");
@@ -167,7 +170,9 @@ public class AILibrary : MonoBehaviour {
         {
             print("player is not null");
         }
+        */
         playerController = player.GetComponent<OVRPlayerController>();
+        /*
         if(playerController == null)
         {
             print("error");
@@ -176,6 +181,7 @@ public class AILibrary : MonoBehaviour {
         {
             print("fine");
         }
+        */
         isPlayerShotLive = false;
         isLerpingHealthBar = false;
         forcePlayerMiss = false;
@@ -668,7 +674,7 @@ public class AILibrary : MonoBehaviour {
     {
         allowFire = false;
         frozenAttackTime = Time.fixedTime - playerAttackStartTime;
-        playerShot = (GameObject)Instantiate(Resources.Load("PlayerShot"), activePlayerPointer.transform.position, activePlayerPointer.transform.rotation);
+        playerShot = (GameObject)Instantiate(Resources.Load(attackMethod), activePlayerPointer.transform.position, activePlayerPointer.transform.rotation);
         //Object.Destroy(activePlayerPointer);
         //activePlayerPointer = null;
         isPlayerShotLive = true;
@@ -695,7 +701,7 @@ public class AILibrary : MonoBehaviour {
     {
         allowFire = false;
         frozenAttackTime = Time.fixedTime - playerAttackStartTime;
-        playerShot = (GameObject)Instantiate(Resources.Load("PlayerShot"), activePlayerPointer.transform.position, activePlayerPointer.transform.rotation);
+        playerShot = (GameObject)Instantiate(Resources.Load(attackMethod), activePlayerPointer.transform.position, activePlayerPointer.transform.rotation);
         // Object.Destroy(activePlayerPointer);
         // activePlayerPointer = null;
         isPlayerShotLive = true;

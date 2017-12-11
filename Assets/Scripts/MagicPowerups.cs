@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class MagicPowerups : MonoBehaviour {
 
+    public AILibrary lib;
+    public NewBossAI nb;
     public enum PowerUp { NONE, FIRE, ICE, THUNDER, empty }
 
     public PowerUp currPowerUp = PowerUp.NONE; //Default powerup is none
@@ -23,12 +25,19 @@ public class MagicPowerups : MonoBehaviour {
                 break;
             case PowerUp.FIRE:
                 //Fire powerup is the active powerup, check for input or do something
+                lib.attackMethod = "FireMagic";
+                FireAvailable = false;
                 break;
             case PowerUp.ICE:
                 //Ice powerup is active powerup
+                lib.attackMethod = "IceMagic";
+                IceAvailable = false;
+                nb.isfreeze = true;
                 break;
             case PowerUp.THUNDER:
                 //Thunder powerup is active powerup
+                lib.attackMethod = "ThunderMagic";
+                ThunderAvailable = false;
                 break;
         }
     }

@@ -11,12 +11,19 @@ public class NewBossAI : MonoBehaviour
     private GameObject gasterBlaster;
     private GameObject canon;
 	private GameObject megaCanon;
+    private GameObject megaLaser;
     private PlayerInfo playerInfo;
     private int laserFailCount;
     private int prevPlayerHealth;
     private int turnCount;
     private float shuffleAttackDelay;
+    public bool isfreeze;
     //private int MuteCount;
+
+    private delegate void OnCutoutFinishedEvent();
+    private bool overrideMusicHandleNextCutin;
+    private OnCutoutFinishedEvent onCutFinishedCallback;
+    SpriteRenderer sr;
 
     void Start()
     {
@@ -26,14 +33,18 @@ public class NewBossAI : MonoBehaviour
         canon = (GameObject)Resources.Load("CanonBlaster");
 		megaCanon = (GameObject)Resources.Load("MegaCanonBlaster");
 
+        sr = GetComponentInChildren<SpriteRenderer>();
+        sr.sprite = Resources.Load<Sprite>("sans_color");
+
         playerInfo = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInfo>();
         laserFailCount = 0;
         lib.RegisterCrossheirPositionFunc(CrossheirPosition);
         lib.SetVitals(180.0f);
         //lib.SetVitals(11.0f);
         turnCount = 0;
-        Invoke("begin", 0.1f);
+        Invoke("intro", 0.1f);
         //MuteCount = 1;
+        isfreeze = false;
     }
 
     // Update is called once per frame
@@ -52,6 +63,34 @@ public class NewBossAI : MonoBehaviour
         }
         //Debug.Log(MuteCount);
         */
+    }
+
+
+    private void cutout(float outTime, OnCutoutFinishedEvent finishedCallback, bool overrideMusicHandle = false)
+    {
+        overrideMusicHandleNextCutin = overrideMusicHandle;
+        if (!overrideMusicHandle)
+        {
+            lib.PauseMusic();
+
+        }
+        //Instantiate(CutInSound, lib.GetPlayerPos(), Quaternion.identity);
+        lib.DestroyProjectiles();
+        lib.BlindPlayer(true);
+        onCutFinishedCallback = finishedCallback;
+        Invoke("cutoutEnd", outTime);
+    }
+
+    private void cutoutEnd()
+    {
+        //Instantiate(CutOutSound, lib.GetPlayerPos(), Quaternion.identity);
+        lib.BlindPlayer(false);
+        if (!overrideMusicHandleNextCutin)
+        {
+            lib.ResumeMusic();
+        }
+        overrideMusicHandleNextCutin = false;
+        onCutFinishedCallback();
     }
 
     public float CrossheirPosition(float time)
@@ -270,14 +309,34 @@ public class NewBossAI : MonoBehaviour
         lib.WaitForProjectiles(playerTurn);
     }
 
+    private void tracer2()
+    {
+        lib.fadeEnemy();
+        GameObject c = spawner.SpawnProjectileAtAngle(megaCanon, 40, 0, 1.0f);  // Left
+        c.GetComponent<CanonSeries>().Init(0, -40, 1.0f, 1.0f, 0.05f);
+        c = spawner.SpawnProjectileAtAngle(megaCanon, 0, 0, 1.0f);  // Right
+        c.GetComponent<CanonSeries>().Init(0, 40, 1.0f, 1.0f, 0.05f);
+        lib.WaitForProjectiles(playerTurn);
+    }
+
+    private void firstBlood()
+    {
+        lib.fadeEnemy();
+        GameObject c = spawner.SpawnProjectileAtAngle(megaCanon, 15, -50, 0.7f); // Right
+        c.GetComponent<CanonSeries>().Init(0, 50, 0.8f, 1.5f, 0.1f);
+        c = spawner.SpawnProjectileAtAngle(megaCanon, 50, -25, 0.7f); // Down
+        c.GetComponent<CanonSeries>().Init(-50, 0, 0.8f, 1.5f, 0.1f);
+        lib.WaitForProjectiles(playerTurn);
+    }
+
     private AILibrary.OnSpeechFinishedEvent getRandomAttack()
     {
         int num = (int)(Random.value * 3.0f);
         if (num == 0)
             return shuffleAttack;
         else if (num == 1)
-            return fastSplitSingle;
-        return fastDownXDouble;
+            return tracer2;
+        return firstBlood;
     }
 
     private void randomSpeech()
@@ -316,15 +375,16 @@ public class NewBossAI : MonoBehaviour
             return;
         }
         else {
-            if (OVRInput.Get(OVRInput.Button.Two))
+            if (isfreeze)
             {
                 lib.AddTextToQueue(" (freeze) ", getFreezeAttack());
+                isfreeze = false;
             }
             else {
                 switch (turnCount)
                 {   
             case 1:
-                lib.AddTextToQueue(" ... ", getRandomAttack());//slowXSingle
+                lib.AddTextToQueue(" ... ", bulletHellBlast1);//slowXSingle
                 break;
             /*
             case 2:
@@ -392,6 +452,29 @@ public class NewBossAI : MonoBehaviour
         //MuteCount++;
     }
 
+    private void bulletHellBlast1()
+    {
+        lib.fadeEnemy();
+        float delay = 0.25f;
+        bulletHellBlast1_spawn();
+        for (int i = 1; i < 40; i++)
+        {
+            Invoke("bulletHellBlast1_spawn", delay * i);
+        }
+        lib.WaitForProjectiles(playerTurn);
+    }
+
+    private void bulletHellBlast1_spawn()
+    {
+        Vector2 center = bulletHellBlase1_getRandomCenter();
+        spawner.SpawnProjectileAtAngle(megaLaser, center.x, center.y, 1.0f);
+    }
+
+    private Vector2 bulletHellBlase1_getRandomCenter()
+    {
+        return new Vector2((int)(Random.value * 45.0f) - 5, (int)(Random.value * 80.0f) - 40);
+    }
+
     private void playerTurn()
     {
         lib.solidifyEnemy();
@@ -404,6 +487,43 @@ public class NewBossAI : MonoBehaviour
         //lib.PlayMusic((AudioClip)Resources.Load("Bonetrousle"));
         playerTurn();
     }
+
+    private void intro() {
+        lib.PlayMusic((AudioClip)Resources.Load("sans."));
+        lib.AddTextToQueue("Hi, buddy");
+        lib.AddTextToQueue("Welcome to the my palace");
+        lib.AddTextToQueue("Do you feel those bosses including me are hard to beat?");
+        lib.AddTextToQueue("Let me tell you a new technique as a friend");
+        lib.AddTextToQueue("Try press \"X\" or \"Y\" on your left hand");
+        lib.AddTextToQueue("These are your magic power");
+        lib.AddTextToQueue("You can use magic for defence and offence");
+        lib.AddTextToQueue("Just keep in mind some of them have use limit");
+        lib.AddTextToQueue("You can try it now");
+        lib.AddTextToQueue("Also, here is another suggestion.");
+        lib.AddTextToQueue("A super awesome trick to beat all bosses!");
+        lib.AddTextToQueue("Which the developer won't tell you");
+        lib.AddTextToQueue("Do you want to know?");
+        lib.AddTextToQueue("Here it is...", intro2);
+    }
+
+    private void intro2() {
+        lib.AddTextToQueue(" ! ! ! ");
+        lib.StopMusic();
+        lib.AddTextToQueue("UOOO!");
+        lib.AddTextToQueue("GUAAAAAA");
+        lib.AddTextToQueue("SHUT UP!!");
+        lib.AddTextToQueue("SHI-----");
+        lib.AddTextToQueue("UHHHHHHHHH");
+        cutout(1.0f, postFirstCut, true);
+    }
+
+    private void postFirstCut()
+    {
+        sr.sprite = Resources.Load<Sprite>("newboss");
+        lib.AddTextToQueue(".");
+        lib.AddTextToQueue("..", begin);
+    }
+
     private void begin()
     {
         lib.PlayMusic((AudioClip)Resources.Load("ORIGINE DELLA VITA"));
