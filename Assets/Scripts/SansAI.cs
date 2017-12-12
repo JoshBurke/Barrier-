@@ -73,7 +73,8 @@ public class SansAI : MonoBehaviour {
 
     void Start () {
         playerInfo = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInfo>();
-
+        playerInfo.MaxHealth = 200;
+        playerInfo.ResetHealth();
         spawner = GameObject.FindGameObjectWithTag("Spawner").GetComponent<Spawner>();
         laser = (GameObject)Resources.Load("UndyneLaser");
         megaLaser = (GameObject)Resources.Load("MegaLaser");
@@ -808,7 +809,7 @@ public class SansAI : MonoBehaviour {
 
     private OnCutoutFinishedEvent cutShuffle3_selectAttack()
     {
-        int selector = (int)(Random.value * 4.0f);
+        int selector = (int)(Random.value * 3.0f);
         switch (selector)
         {
             case 0:
@@ -816,7 +817,7 @@ public class SansAI : MonoBehaviour {
             case 1:
                 return cutShuffle3_shuffleLines;
             case 2:
-                return cutShuffle3_tripleBlast;
+                //return cutShuffle3_tripleBlast;
             default:
                 return cutShuffle3_doubleRing;
         }
@@ -1113,14 +1114,14 @@ public class SansAI : MonoBehaviour {
 
     private OnCutoutFinishedEvent cutShuffle2_selectAttack()
     {
-        int selector = (int)(Random.value * 4.0f);
+        int selector = (int)(Random.value * 3.0f);
         switch (selector)
         {
             case 0:
                 return cutShuffle2_bulletHell;
+            //case 1:
+                //return cutShuffle2_tripleBlast;
             case 1:
-                return cutShuffle2_tripleBlast;
-            case 2:
                 return cutShuffle2_zigZag;
             default:
                 return cutShuffle2_doubleRing;
@@ -1162,7 +1163,7 @@ public class SansAI : MonoBehaviour {
     private void blasterHell1() // 1.5s warmup, 0.5s blast, 0.8s sweepout
     {
         lib.fadeEnemy();
-        float delay = 0.85f;
+        float delay = 1.2f;
         blasterHell1_spawn();
         for (int i = 1; i < 15; i++)
         {
@@ -1297,9 +1298,9 @@ public class SansAI : MonoBehaviour {
         {
             case 0:
                 return cutShuffle1_bulletHell;
+            //case 1:
+                //return cutShuffle1_tripleBlast;
             case 1:
-                return cutShuffle1_tripleBlast;
-            case 2:
                 return cutShuffle1_zigZag;
             default:
                 return cutShuffle1_doubleRing;
@@ -1579,6 +1580,7 @@ public class SansAI : MonoBehaviour {
         lib.WaitForProjectiles(playerTurn);
     }
 
+    //no longer used
     private void crossBlast1_blast2()
     {
         spawner.SpawnProjectileAtAngle(megaBlaster, 20, -10, 1.0f);
@@ -1592,9 +1594,11 @@ public class SansAI : MonoBehaviour {
         c.GetComponent<CanonSeries>().Init(0, -80, 1.0f, 2.0f, 0.1f);
         c = spawner.SpawnProjectileAtAngle(megaCanon, 0, -40, 1.0f);  // Left
         c.GetComponent<CanonSeries>().Init(0, 80, 1.0f, 2.0f, 0.1f);
-        Invoke("crossBlast1_blast2", 2.2f);
+        //Invoke("crossBlast1_blast2", 2.2f);
+        lib.WaitForProjectiles(playerTurn);
     }
 
+    //no longer used
     private void crossBlast1_blast1()
     {
         spawner.SpawnProjectileAtAngle(megaBlaster, 20, -10, 1.0f);
@@ -1609,7 +1613,7 @@ public class SansAI : MonoBehaviour {
         c.GetComponent<CanonSeries>().Init(0, 80, 1.0f, 2.0f, 0.1f);
         c = spawner.SpawnProjectileAtAngle(megaCanon, 0, 40, 1.0f);  // Right
         c.GetComponent<CanonSeries>().Init(0, -80, 1.0f, 2.0f, 0.1f);
-        Invoke("crossBlast1_blast1", 2.2f);
+        Invoke("crossBlast1_round2", 2.2f);
     }
 
     private void snapRing1_spawnRing(Vector2 center, float dScale, float radius, int laserCount)
@@ -1799,7 +1803,7 @@ public class SansAI : MonoBehaviour {
         c.GetComponent<CanonSeries>().Init(0, 100, 1.0f, 1.0f, 0.1f);
         c = spawner.SpawnProjectileAtAngle(megaCanon, 10, 50, 1.0f);
         c.GetComponent<CanonSeries>().Init(0, -100, 1.0f, 1.0f, 0.1f);
-        Invoke("firstBlood_psychSave", 1.2f);
+        Invoke("firstBlood_psychSave", .8f);
     }
 
     private void firstBlood_round2()
@@ -1808,14 +1812,13 @@ public class SansAI : MonoBehaviour {
         c.GetComponent<CanonSeries>().Init(0, -50, 0.8f, 1.5f, 0.1f);
         c = spawner.SpawnProjectileAtAngle(megaCanon, 0, 25, 0.7f); // Up
         c.GetComponent<CanonSeries>().Init(50, 0, 0.8f, 1.5f, 0.1f);
-
         Invoke("firstBlood_psychOut", 1.5f);
     }
-    
+
     private void firstBlood_suprise()
     {
         spawner.SpawnProjectileAtAngle(megaBlasterNoSwing, 20, 20, 1.0f);
-        Invoke("firstBlood_round2", 0.6f);
+        Invoke("firstBlood_round2", 1.0f);
     }
 
     private void firstBlood_earlyCut1()
@@ -1862,7 +1865,7 @@ public class SansAI : MonoBehaviour {
     private void fakeMercy3()
     {
         lib.AddTextToQueue("...");
-        lib.AddTextToQueue("What a loser you are.", spare);
+        lib.AddTextToQueue("Smart choice.", spare);
     }
 
     private void fakeOptions3()
@@ -1883,8 +1886,7 @@ public class SansAI : MonoBehaviour {
     {
         lib.AddTextToQueue("Heh.");
         lib.AddTextToQueue("I guess that's for everyone else, huh?");
-        lib.AddTextToQueue("Get out of here.");
-        lib.AddTextToQueue("You disgust me.", spare);
+        lib.AddTextToQueue("Get out of here.", spare);
     }
 
     private void fakeOptions2()
@@ -1904,8 +1906,7 @@ public class SansAI : MonoBehaviour {
     private void fakeMercy1()
     {
         lib.AddTextToQueue("Ah.");
-        lib.AddTextToQueue("I see.");
-        lib.AddTextToQueue("Then why'd you kill my brother?", spare);
+        lib.AddTextToQueue("I see.", spare);
     }
 
     private void fakeOptions1()
@@ -1928,6 +1929,8 @@ public class SansAI : MonoBehaviour {
     private void begin()
     {
         //getThisStarted();
+        fightIntro();
+        /*
         switch (totalKillCount)
         {
             case 0:
@@ -1961,5 +1964,6 @@ public class SansAI : MonoBehaviour {
                 fightIntro();
                 break;
         }
+        */
     }
 }

@@ -28,9 +28,10 @@ public class UndyneAI : MonoBehaviour
         canon = (GameObject)Resources.Load("UndyneCanonBlaster");
 
         playerInfo = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInfo>();
-
+        playerInfo.MaxHealth = 120;
+        playerInfo.ResetHealth();
         lib.RegisterCrossheirPositionFunc(CrossheirPosition);
-        lib.SetVitals(1.0f);
+        lib.SetVitals(140.0f);
         //lib.SetVitals(11.0f);
         turnCount = 0;
     }
@@ -593,9 +594,10 @@ public class UndyneAI : MonoBehaviour
 
     private void begin()
     {
-        if (totalKillCount == 0)
+        fightIntro();
+        /*if (totalKillCount == 0)
             refuse();
         else
-            fightIntro();
+            fightIntro();*/
     }
 }

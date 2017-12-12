@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{8C11C235-D885-A84C-5A52-AF20A588492D}</ProjectGuid>
+    <ProjectGuid>{2144D599-B3D1-9180-7F51-A5F31BFC64F8}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AssemblyName>Assembly-CSharp-Editor</AssemblyName>
     <FileAlignment>512</FileAlignment>
@@ -156,9 +156,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="Barrier--master.csproj">
-      <Project>{2FC3321E-F75B-B443-E1BF-68B1D3420620}</Project>
-      <Name>Barrier--master</Name>
+    <ProjectReference Include="Barrier-.csproj">
+      <Project>{FC0FE523-9A3C-74C3-8CDC-1D91B7B87ADF}</Project>
+      <Name>Barrier-</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

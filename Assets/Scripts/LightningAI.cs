@@ -42,9 +42,11 @@ public class LightningAI : MonoBehaviour
         if(playerSword != null)
             playerSword.SetActive(false);
 
-        playerInfo = GameObject.Find("OVRPlayerController").GetComponent<PlayerInfo>();
+        playerInfo = GameObject.Find("playerCollider").GetComponent<PlayerInfo>();
+        playerInfo.MaxHealth = 50;
+        playerInfo.ResetHealth();
         lib.RegisterCrossheirPositionFunc(CrossheirPosition);
-        lib.SetVitals(1.0f);
+        lib.SetVitals(180.0f);
         lib.SetLightning();
         attackActive = false;
         enemyDead = false;
@@ -181,15 +183,12 @@ public class LightningAI : MonoBehaviour
         switch (choice)
         {
             case 0:
-            case 1:
                 lib.AddTextToQueue("You're gonna have to be faster than that!", getRandomHardAttack());
                 break;
-            case 2:
-            case 3:
+            case 1:
                 lib.AddTextToQueue("There's no way you'll block this!", getRandomHardAttack());
                 break;
-            case 4:
-            case 5:
+            case 2:
                 lib.AddTextToQueue("No one is faster than Electrus!", getRandomHardAttack());
                 break;
             default:

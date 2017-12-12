@@ -20,9 +20,11 @@ public class PapyrusAI : MonoBehaviour {
         gasterBlaster = (GameObject)Resources.Load("GasterBlaster");
         canon = (GameObject)Resources.Load("CanonBlaster");
         playerInfo = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInfo>();
+        playerInfo.MaxHealth = 40;
+        playerInfo.ResetHealth();
         laserFailCount = 0;
         lib.RegisterCrossheirPositionFunc(CrossheirPosition);
-        lib.SetVitals(180.0f);
+        lib.SetVitals(120.0f);
         //lib.SetVitals(11.0f);
         turnCount = 0;
         Invoke("begin", 0.1f);
@@ -357,6 +359,7 @@ public class PapyrusAI : MonoBehaviour {
         playerTurn();
     }
 
+    /*
     private void superSeriousBattleStarting()
     {
         lib.StopMusic();
@@ -415,7 +418,6 @@ public class PapyrusAI : MonoBehaviour {
             lib.AddTextToQueue("But the time has come!", superSeriousBattleStarting);
         }
     }
-
     private void blasterIntro()
     {
         lib.fadeEnemy();
@@ -572,32 +574,13 @@ public class PapyrusAI : MonoBehaviour {
         prevPlayerHealth = lib.GetPlayerHealth();
         lib.WaitForProjectiles(done);
     }
+    */
 
     private void begin()
     {
         lib.PlayMusic((AudioClip)Resources.Load("Nyeh Heh Heh!"));
-        lib.AddTextToQueue("Welcome, human!");
-        lib.AddTextToQueue("Although you are new to this world, fear not!");
-        lib.AddTextToQueue("For I, the great Papyrus, am here to guide you on your path!");
-        lib.AddTextToQueue("Not because I must-- but because I am great.");
-        lib.AddTextToQueue("And handsome.");
-        lib.AddTextToQueue("And also humble.");
-        lib.AddTextToQueue("I'm pretty great.");
-        lib.AddTextToQueue("Yup.");
-        lib.AddTextToQueue("...");
-        lib.AddTextToQueue("Anyway, life down here is fraught with peril!");
-        lib.AddTextToQueue("Everyone you meet will surely try to kill you!");
-        lib.AddTextToQueue("Not because we're mean, honestly it's just how we say \"hello\".");
-        lib.AddTextToQueue("...");
-        lib.AddTextToQueue(".....");
-        lib.AddTextToQueue("Hey, don't judge my culture you ethnocentric ass.");
-        lib.AddTextToQueue("Anyway, the great Papyrus shall now prepare you for the journey ahead!");
-        lib.AddTextToQueue("See those glowey things on your hands?");
-        lib.AddTextToQueue("Those are your BARRIERS!");
-        lib.AddTextToQueue("Or possibly inoperable TUMORS!");
-        lib.AddTextToQueue("But hopefully BARRIERS!");
-        lib.AddTextToQueue("Down here, we tend to throw LASERS at our guests.");
-        lib.AddTextToQueue("They're super easy to draw, you see.");
-        lib.AddTextToQueue("Hold a BARRIER in front of this LASER!", pewpew);
+        lib.AddTextToQueue("Ah, back again I see!");
+        lib.AddTextToQueue("Ready to test your skills against the strongest skeleton in the world, eh?");
+        lib.AddTextToQueue("Well alright, if you insist, but I won't be going easy on you this time!", beginTrueFight);
     }
 }

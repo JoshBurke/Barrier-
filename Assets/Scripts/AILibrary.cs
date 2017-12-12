@@ -46,7 +46,6 @@ public class AILibrary : MonoBehaviour {
     private float playerAttackStartTime;
     private bool isAttackMenuLive;
     private bool isPlayerAttacking;
-    // <Robert>
     private bool crossheirActive;
     private bool allowFire;
     private bool fightDone;
@@ -54,7 +53,6 @@ public class AILibrary : MonoBehaviour {
     private bool lightning;
     private bool speechBubbleActive;
     private bool setAttackPos;
-    // </Robert>
     private bool isAttackTimeFrozen;
     private float frozenAttackTime;
     private bool isPlayerShotLive;
@@ -612,7 +610,7 @@ public class AILibrary : MonoBehaviour {
         }
     }*/
 
-    public void Die(bool overrideSpriteFade = false, float timeToCleanup = 4.0f)
+    public void Die(bool overrideSpriteFade = false, float timeToCleanup = 2.0f)
     {
         Instantiate(Resources.Load("Die"), player.transform.position, player.transform.rotation);   // Sound effect
         if (!overrideSpriteFade)
@@ -626,6 +624,21 @@ public class AILibrary : MonoBehaviour {
             isDead = true;
         }
         //createSword();
+    }
+
+    public void fakeDeath(bool overrideSpriteFade = false, float timeToCleanup = 2.0f)
+    {
+        Instantiate(Resources.Load("Die"), player.transform.position, player.transform.rotation);
+        if (!overrideSpriteFade)
+        {
+            dieStartTime = Time.fixedTime;
+            isDying = true;
+        }
+        else
+        {
+            Invoke("cleanUp", timeToCleanup);
+            isDead = false;
+        }
     }
 
     public void Spare()

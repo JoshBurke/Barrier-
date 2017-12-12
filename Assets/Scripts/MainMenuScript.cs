@@ -14,11 +14,9 @@ public class MainMenuScript : MonoBehaviour {
     private OVRPlayerController playerController;
     private GameObject activePlayerPointer;
     private GameObject playerPointer;
-
-    // <Robert>
+    
     private GameObject lightningButton;
     private MenuButtonHighligher lightningButtonHighlighter;
-    // </Robert>
 
     private GameObject papyrusButton;
     private MenuButtonHighligher papyrusButtonHighlighter;
@@ -57,9 +55,7 @@ public class MainMenuScript : MonoBehaviour {
 
     private GameObject undyne;
     private GameObject sans;
-    // <Robert>
     private GameObject lightning;
-    // </Robert>
 
     private GameObject[] credits;
 
@@ -85,18 +81,19 @@ public class MainMenuScript : MonoBehaviour {
     private MenuButtonHighligher mainMenuButtonHighlighter;
 
     // <Robert>
-    private GameObject tutorial;
-    private TextMesh tutorialText;
+    //private GameObject tutorial;
+    //private TextMesh tutorialText;
     private GameObject continueButton;
     private MenuButtonHighligher continueButtonHighlighter;
-    private bool tutorialEnabled;
-    private int tutorialScreen;
-    private List<string> tutorialTexts;
-    private float lastTimeContinued;
+    //private bool tutorialEnabled;
+    //private int tutorialScreen;
+    //private List<string> tutorialTexts;
+    //private float lastTimeContinued;
     private GameObject creditsButton;
     private MenuButtonHighligher creditsButtonHighlighter;
     private GameObject tutorialButton;
     private MenuButtonHighligher tutorialButtonHighlighter;
+    private GameObject papyrusTutorial;
     // </Robert>
 
     void Start () {
@@ -120,6 +117,8 @@ public class MainMenuScript : MonoBehaviour {
         cheatButtonHighlighter = cheatButton.GetComponent<MenuButtonHighligher>();
         megaCheatButton = transform.Find("MegaCheatButton").gameObject;
         megaCheatButtonHighlighter = megaCheatButton.GetComponent<MenuButtonHighligher>();*/
+        continueButton = GameObject.Find("ContinueButton");
+        continueButtonHighlighter = continueButton.GetComponent<MenuButtonHighligher>();
 
         NewBossButton = transform.Find("NewBossButton").gameObject;
         NewBossButtonHighlighter = NewBossButton.GetComponent<MenuButtonHighligher>();
@@ -137,11 +136,9 @@ public class MainMenuScript : MonoBehaviour {
         undyneKillButton = transform.Find("UndyneKillButton").gameObject;
         undyneKillButtonHighlighter = undyneKillButton.GetComponent<MenuButtonHighligher>();
         undyneKillButton.SetActive(false);
-
-        // <Robert>
+        
         lightningButton = transform.Find("LightningButton").gameObject;
         lightningButtonHighlighter = lightningButton.GetComponent<MenuButtonHighligher>();
-        // </Robert>
 
         hud = GameObject.Find("ElasticHUD");
         mainMenu = GameObject.Find("MainMenu");
@@ -170,21 +167,19 @@ public class MainMenuScript : MonoBehaviour {
         gameOverMusic = (AudioClip)Resources.Load("Determination");
 
         // <Robert>
-        tutorial = GameObject.Find("TutorialText");
-        tutorialText = tutorial.GetComponent<TextMesh>();
-        continueButton = GameObject.Find("ContinueButton");
-        continueButtonHighlighter = continueButton.GetComponent<MenuButtonHighligher>();
-        tutorialEnabled = true;
-        tutorialScreen = 0;
-        tutorialTexts = new List<string>();
-        lastTimeContinued = 0.0f;
+        //tutorial = GameObject.Find("TutorialText");
+        //tutorialText = tutorial.GetComponent<TextMesh>();
+        //tutorialEnabled = true;
+        //tutorialScreen = 0;
+        //tutorialTexts = new List<string>();
+        //lastTimeContinued = 0.0f;
         creditsButton = GameObject.Find("CreditsButton");
         creditsButtonHighlighter = creditsButton.GetComponent<MenuButtonHighligher>();
         tutorialButton = GameObject.Find("TutorialButton");
         tutorialButtonHighlighter = tutorialButton.GetComponent<MenuButtonHighligher>();
-        fillTutorialTexts();
+        //fillTutorialTexts();
         playMusic((AudioClip)Resources.Load("Menu (Full)"));
-        Invoke("startTutorial", 0.01f);
+        Invoke("initOpenMenu", 0.01f);
 
         foreach(GameObject obj in credits)
         {
@@ -200,12 +195,13 @@ public class MainMenuScript : MonoBehaviour {
     }
 
     void Update () {
-        if (!isEnabled && !tutorialEnabled)
+        if (!isEnabled) // && !tutorialEnabled)
             return;
         inputManager();
         buttonManager();
 	}
 
+    /*
     private void startTutorial()
     {
         closeMenu(true);
@@ -217,6 +213,7 @@ public class MainMenuScript : MonoBehaviour {
         fightButton.SetActive(false);
         mercyButton.SetActive(false);
     }
+    */
     private void initOpenMenu()
     {
         OpenMenu(false, true);
@@ -231,15 +228,17 @@ public class MainMenuScript : MonoBehaviour {
             slayEnemy();
         }
         isEnabled = true;
-        if (!enemyKilled) { } // for returning to the menu from tutorial/credits
+        playMusic((AudioClip)Resources.Load("Menu (Full)"));
+        /*if (!enemyKilled) { } // for returning to the menu from tutorial/credits
         else if (killedCount == 0)
-            playMusic((AudioClip)Resources.Load("Menu (Full"));
+            playMusic((AudioClip)Resources.Load("Menu (Full)"));
         else if (killedCount == 1)
             playMusic((AudioClip)Resources.Load("Start Menu"));
         else if (killedCount == 2)
             playMusic((AudioClip)Resources.Load("Small Shock"));
         else
             playMusic((AudioClip)Resources.Load("Dummy!"));
+        */
        
         if (pointerActive == false)
         {
@@ -258,21 +257,20 @@ public class MainMenuScript : MonoBehaviour {
         //megaCheatButton.SetActive(true);
 
         NewBossButton.SetActive(true);
-
-        // <Robert>
+        
         lightningButton.SetActive(true);
         creditsButton.SetActive(true);
         tutorialButton.SetActive(true);
-        // </Robert>
-
         upButton.SetActive(true);
         downButton.SetActive(true);
+        continueButton.SetActive(false);
 
-        godButton.SetActive(true);
-        if(killedCount == 0)
+        godButton.SetActive(false);
+        /*if(killedCount == 0)
             papyrusKillButton.SetActive(true);
         else if(killedCount == 1)
             undyneKillButton.SetActive(true);
+        */
 
         foreach(GameObject obj in credits)
         {
@@ -352,130 +350,143 @@ public class MainMenuScript : MonoBehaviour {
         lightning.GetComponent<AILibrary>().RegisterAttackButtons(fightButton, mercyButton);
         lightning.GetComponent<LightningAI>().RegisterTotalKills(killedCount);
     }
+
+    private void startPapyrusTutorial()
+    {
+        papyrusTutorial.GetComponent<AILibrary>().RegisterAttackButtons(fightButton, mercyButton);
+    }
     // </Robert>
 
     private void buttonManager()
     {
-        if(tutorialEnabled)
+        /*if(tutorialEnabled)
         {
             tutorialButtonManager();
         }
         else
+        {*/
+        if (domPressedThisFrame)
         {
-            if (domPressedThisFrame)
+            if (papyrusButtonHighlighter.IsHovered())
             {
-                if (papyrusButtonHighlighter.IsHovered())
+                closeMenu();
+                enemyFought = 0;
+                GameObject p = (GameObject)Instantiate(Resources.Load("Papyrus"));
+                p.GetComponent<AILibrary>().RegisterAttackButtons(fightButton, mercyButton);
+            }
+            else if (NewBossButtonHighlighter.IsHovered())
+            {
+                closeMenu();
+                enemyFought = 0;
+                SceneManager.LoadScene(1);
+                GameObject n = (GameObject)Instantiate(Resources.Load("NewBoss"));
+                n.GetComponent<AILibrary>().RegisterAttackButtons(fightButton, mercyButton);
+            }
+            else if (undyneButtonHighlighter.IsHovered())
+            {
+                closeMenu();
+                enemyFought = 1;
+                undyne = (GameObject)Instantiate(Resources.Load("Undyne"));
+                Invoke("startUndyne", 0.01f);
+            }
+            else if (sansButtonHighlighter.IsHovered())
+            {
+                closeMenu(true);
+                enemyFought = 2;
+                sans = (GameObject)Instantiate(Resources.Load("Sans"));
+                Invoke("startSans", 0.01f);
+            } // <Robert>
+            else if (lightningButtonHighlighter.IsHovered())
+            {
+                closeMenu();
+                enemyFought = 3;
+                lightning = (GameObject)Instantiate(Resources.Load("Lightning"));
+                Invoke("startLightning", 0.01f);
+            } // </Robert>
+            else if (quitButtonHighlighter.IsHovered())
+            {
+                Application.Quit();
+            }
+            else if (upButtonHighlighter.IsHovered())
+            {
+                nudgeMenu(1.0f);
+            }
+            else if (downButtonHighlighter.IsHovered())
+            {
+                nudgeMenu(-1.0f);
+            }
+            /*
+            else if(cheatButtonHighlighter.IsHovered())
+            {
+                killedCount = 1;
+                playerInfo.MaxHealth = 120;
+                playerInfo.ResetHealth();
+                playMusic((AudioClip)Resources.Load("Start Menu"));
+            }
+            else if(megaCheatButtonHighlighter.IsHovered())
+            {
+                killedCount = 2;
+                playerInfo.MaxHealth = 200;
+                playerInfo.ResetHealth();
+                playMusic((AudioClip)Resources.Load("Small Shock"));
+            }*/
+            /*else if (godButtonHighlighter.IsHovered())
+            {
+                playerInfo.GodModeToggle();
+            }
+            else if (papyrusKillButtonHighlighter.IsHovered())
+            {
+                enemyFought = 0;
+                slayEnemy();
+                playerInfo.MaxHealth = 120;
+                playerInfo.ResetHealth();
+                playMusic((AudioClip)Resources.Load("Start Menu"));
+                undyneKillButton.SetActive(true);
+                papyrusKillButton.SetActive(false);
+                papyrusKillButtonHighlighter.ForceDeselect();
+            }
+            else if (undyneKillButtonHighlighter.IsHovered())
+            {
+                enemyFought = 1;
+                slayEnemy();
+                playerInfo.MaxHealth = 200;
+                playerInfo.ResetHealth();
+                playMusic((AudioClip)Resources.Load("Small Shock"));
+                undyneKillButton.SetActive(false);
+                undyneKillButtonHighlighter.ForceDeselect();
+            }*/
+            else if (mainMenuButtonHighlighter.IsHovered())
+            {
+                mainMenuButton.SetActive(false);
+                mainMenuButtonHighlighter.ForceDeselect();
+                OpenMenu(false, true);
+            }
+            else if (creditsButtonHighlighter.IsHovered())
+            {
+                closeMenu(true);
+                isEnabled = true; // bit of a hack to get around menu's current coding
+                mainMenuButton.SetActive(true);
+                foreach(GameObject obj in credits)
                 {
-                    closeMenu();
-                    enemyFought = 0;
-                    GameObject p = (GameObject)Instantiate(Resources.Load("Papyrus"));
-                    p.GetComponent<AILibrary>().RegisterAttackButtons(fightButton, mercyButton);
-                }
-                else if (NewBossButtonHighlighter.IsHovered())
-                {
-                    closeMenu();
-                    enemyFought = 0;
-                    SceneManager.LoadScene(1);
-                    GameObject n = (GameObject)Instantiate(Resources.Load("NewBoss"));
-                    n.GetComponent<AILibrary>().RegisterAttackButtons(fightButton, mercyButton);
-                }
-                else if (undyneButtonHighlighter.IsHovered())
-                {
-                    closeMenu();
-                    enemyFought = 1;
-                    undyne = (GameObject)Instantiate(Resources.Load("Undyne"));
-                    Invoke("startUndyne", 0.01f);
-                }
-                else if (sansButtonHighlighter.IsHovered())
-                {
-                    closeMenu(true);
-                    enemyFought = 2;
-                    sans = (GameObject)Instantiate(Resources.Load("Sans"));
-                    Invoke("startSans", 0.01f);
-                } // <Robert>
-                else if (lightningButtonHighlighter.IsHovered())
-                {
-                    closeMenu();
-                    enemyFought = 3;
-                    lightning = (GameObject)Instantiate(Resources.Load("Lightning"));
-                    Invoke("startLightning", 0.01f);
-                } // </Robert>
-                else if (quitButtonHighlighter.IsHovered())
-                {
-                    Application.Quit();
-                }
-                else if (upButtonHighlighter.IsHovered())
-                {
-                    nudgeMenu(1.0f);
-                }
-                else if (downButtonHighlighter.IsHovered())
-                {
-                    nudgeMenu(-1.0f);
-                }
-                /*
-                else if(cheatButtonHighlighter.IsHovered())
-                {
-                    killedCount = 1;
-                    playerInfo.MaxHealth = 120;
-                    playerInfo.ResetHealth();
-                    playMusic((AudioClip)Resources.Load("Start Menu"));
-                }
-                else if(megaCheatButtonHighlighter.IsHovered())
-                {
-                    killedCount = 2;
-                    playerInfo.MaxHealth = 200;
-                    playerInfo.ResetHealth();
-                    playMusic((AudioClip)Resources.Load("Small Shock"));
-                }*/
-                else if (godButtonHighlighter.IsHovered())
-                {
-                    playerInfo.GodModeToggle();
-                }
-                else if (papyrusKillButtonHighlighter.IsHovered())
-                {
-                    enemyFought = 0;
-                    slayEnemy();
-                    playerInfo.MaxHealth = 120;
-                    playerInfo.ResetHealth();
-                    playMusic((AudioClip)Resources.Load("Start Menu"));
-                    undyneKillButton.SetActive(true);
-                    papyrusKillButton.SetActive(false);
-                    papyrusKillButtonHighlighter.ForceDeselect();
-                }
-                else if (undyneKillButtonHighlighter.IsHovered())
-                {
-                    enemyFought = 1;
-                    slayEnemy();
-                    playerInfo.MaxHealth = 200;
-                    playerInfo.ResetHealth();
-                    playMusic((AudioClip)Resources.Load("Small Shock"));
-                    undyneKillButton.SetActive(false);
-                    undyneKillButtonHighlighter.ForceDeselect();
-                }
-                else if (mainMenuButtonHighlighter.IsHovered())
-                {
-                    mainMenuButton.SetActive(false);
-                    mainMenuButtonHighlighter.ForceDeselect();
-                    OpenMenu(false, true);
-                }
-                else if (creditsButtonHighlighter.IsHovered())
-                {
-                    closeMenu(true);
-                    isEnabled = true; // bit of a hack to get around menu's current coding
-                    mainMenuButton.SetActive(true);
-                    foreach(GameObject obj in credits)
-                    {
-                        obj.SetActive(true);
-                    }
-                }
-                else if (tutorialButtonHighlighter.IsHovered())
-                {
-                    startTutorial();
+                    obj.SetActive(true);
                 }
             }
+            else if (tutorialButtonHighlighter.IsHovered())
+            {
+                closeMenu();
+                upButton.SetActive(true);
+                downButton.SetActive(true);
+                continueButton.SetActive(true);
+                isEnabled = false;
+                enemyFought = 0;
+                papyrusTutorial = (GameObject)Instantiate(Resources.Load("PapyrusTutorial"));
+                Invoke("startPapyrusTutorial", 0.01f);
+            }
         }
+        //}
     }
 
+    /*
     private void tutorialButtonManager()
     {
         if(domPressedThisFrame)
@@ -516,6 +527,7 @@ public class MainMenuScript : MonoBehaviour {
             }
         }
     }
+    */
 
     private void nudgeMenu(float scale)
     {
@@ -528,7 +540,7 @@ public class MainMenuScript : MonoBehaviour {
         }
         hud.transform.position += nudgeVec;
         mainMenu.transform.position += nudgeVec;
-        continueButton.transform.position += nudgeVec;
+        //continueButton.transform.position += nudgeVec;
         projSpawner.transform.position += nudgeVec;
     }
 
@@ -555,20 +567,22 @@ public class MainMenuScript : MonoBehaviour {
         downButton.SetActive(false);
         downButtonHighlighter.ForceDeselect();
 
+        /*
         godButton.SetActive(false);
         godButtonHighlighter.ForceDeselect();
         papyrusKillButton.SetActive(false);
         papyrusKillButtonHighlighter.ForceDeselect();
         undyneKillButton.SetActive(false);
         undyneKillButtonHighlighter.ForceDeselect();
-        // <Robert>
+        */
         lightningButton.SetActive(false);
         lightningButtonHighlighter.ForceDeselect();
         creditsButton.SetActive(false);
         creditsButtonHighlighter.ForceDeselect();
         tutorialButton.SetActive(false);
         tutorialButtonHighlighter.ForceDeselect();
-        // </Robert>
+        continueButton.SetActive(false);
+        continueButtonHighlighter.ForceDeselect();
 
         /*cheatButtonHighlighter.ForceDeselect();
         cheatButton.SetActive(false);
@@ -584,7 +598,7 @@ public class MainMenuScript : MonoBehaviour {
 
     private void slayEnemy()
     {
-        killedCount++;
+        /*killedCount++;
         switch (enemyFought)
         {
             case 0:
@@ -603,7 +617,7 @@ public class MainMenuScript : MonoBehaviour {
                 killedCount--;
                 break;
                 // </Robert>
-        }
+        }*/
     }
 
     private void playMusic(AudioClip clip)
@@ -631,10 +645,12 @@ public class MainMenuScript : MonoBehaviour {
         return OVRInput.Get(OVRInput.RawButton.RIndexTrigger);
     }
 
+    /*
     private void fillTutorialTexts()
     {
         tutorialTexts.Add("Welcome to Barrier!\n\nA university of illinois\nat urbana-champaign\nvirtual reality game.\n\npoint the laser on your\nright hand at the \"continue\"\nbutton and press the right\ntrigger to continue");
         tutorialTexts.Add("click the buttons on the left\nto move the interface up\nor down. Position the \"continue\"\nbutton around sternum height.\nclick continue when you are done.");
         tutorialTexts.Add("in this game you will fight\nenemies that fire lasers\nat you. Use the barriers on your\nhands to block their lasers,\nand use your right hand to attack!");
     }
+    */
 }
