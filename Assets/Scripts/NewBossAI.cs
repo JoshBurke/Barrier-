@@ -12,7 +12,7 @@ public class NewBossAI : MonoBehaviour
     private GameObject canon;
 	private GameObject megaCanon;
     private GameObject megaLaser;
-    private PlayerInfo playerInfo;
+    private newPlayerInfo playerInfo;
     private int laserFailCount;
     private int prevPlayerHealth;
     private int turnCount;
@@ -36,7 +36,7 @@ public class NewBossAI : MonoBehaviour
         sr = GetComponentInChildren<SpriteRenderer>();
         sr.sprite = Resources.Load<Sprite>("sans_color");
 
-        playerInfo = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInfo>();
+        playerInfo = GameObject.FindGameObjectWithTag("Player").GetComponent<newPlayerInfo>();
         laserFailCount = 0;
         lib.RegisterCrossheirPositionFunc(CrossheirPosition);
         lib.SetVitals(180.0f);
@@ -384,7 +384,7 @@ public class NewBossAI : MonoBehaviour
                 switch (turnCount)
                 {   
             case 1:
-                lib.AddTextToQueue(" ... ", bulletHellBlast1);//slowXSingle
+                lib.AddTextToQueue(" ... ", getRandomAttack());//slowXSingle
                 break;
             /*
             case 2:
@@ -513,13 +513,17 @@ public class NewBossAI : MonoBehaviour
         lib.AddTextToQueue("GUAAAAAA");
         lib.AddTextToQueue("SHUT UP!!");
         lib.AddTextToQueue("SHI-----");
-        lib.AddTextToQueue("UHHHHHHHHH");
+        lib.AddTextToQueue("UHHHHHHHHH",intro3);
+    }
+
+    private void intro3() {
+
         cutout(1.0f, postFirstCut, true);
     }
 
     private void postFirstCut()
     {
-        sr.sprite = Resources.Load<Sprite>("newboss");
+        sr.sprite = Resources.Load<Sprite>("newboss2");
         lib.AddTextToQueue(".");
         lib.AddTextToQueue("..", begin);
     }

@@ -5,8 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class newPlayerInfo : MonoBehaviour
 {
-    public int MaxHealth = 40;
-    private int health;
+    public int MaxHealth = 400;
+    private int health = 400;
 
     private bool isGodModeActive;
 

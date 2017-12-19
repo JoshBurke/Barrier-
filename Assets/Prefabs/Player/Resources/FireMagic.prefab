@@ -115,9 +115,9 @@ MonoBehaviour:
   Speed: 3
   MaxDamage: 50
   MaxLifetime: 3
-  FireSound: {fileID: 1700769797664364, guid: 2764d994818bb4f4696d8a2086c9bc52, type: 2}
+  FireSound: {fileID: 1700769797664364, guid: 405df2de0a93b8f4ebfb34e73f4b34e8, type: 2}
   HitSound: {fileID: 1477761174427418, guid: 5a381bdf1cb296644a0a96187a2c8b39, type: 2}
-  HapticSound: {fileID: 8300000, guid: 7008457555ec9b14da4f97bd7cce5cc7, type: 3}
+  HapticSound: {fileID: 8300000, guid: 16e8af0ce2ad65f4aac38881bf3ebdd8, type: 3}
 --- !u!114 &114829477786885250
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -242,6 +242,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcf6e463be7b5b34ebed98066418604d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lib: {fileID: 0}
+  nb: {fileID: 0}
   currPowerUp: 0
   FireAvailable: 1
   IceAvailable: 1
@@ -947,7 +949,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -1631223872
+  randomSeed: 1467787547
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -4791,7 +4793,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbe16418ba7b0a9458d0a5cb5da167ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxHealth: 40
+  MaxHealth: 400
 --- !u!1001 &720204596
 Prefab:
   m_ObjectHideFlags: 0
@@ -16502,7 +16504,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -1207979062
+  randomSeed: -1333616609
   InitialModule:
     serializedVersion: 3
     enabled: 1

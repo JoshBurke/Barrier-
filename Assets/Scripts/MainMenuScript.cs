@@ -377,7 +377,6 @@ public class MainMenuScript : MonoBehaviour {
             else if (NewBossButtonHighlighter.IsHovered())
             {
                 closeMenu();
-                enemyFought = 0;
                 SceneManager.LoadScene(1);
                 GameObject n = (GameObject)Instantiate(Resources.Load("NewBoss"));
                 n.GetComponent<AILibrary>().RegisterAttackButtons(fightButton, mercyButton);

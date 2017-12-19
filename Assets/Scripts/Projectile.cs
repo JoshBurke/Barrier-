@@ -58,9 +58,10 @@ public class Projectile : MonoBehaviour
         }
         else if (other.tag == "Player")
         {
-            Debug.Log("Hit a player");
+            
             if (other.GetComponent<PlayerInfo>() != null)
             {
+                //Debug.Log("Hit a player");
                 other.GetComponent<PlayerInfo>().Damage(Damage);
                 if (HitSound != null)
                     Instantiate(HitSound, transform.position, transform.rotation);
@@ -68,7 +69,7 @@ public class Projectile : MonoBehaviour
             }
             else
             {
-                Debug.Log("hit newPlayer");
+                //Debug.Log("hit newPlayer");
                 other.GetComponent<newPlayerInfo>().Damage(Damage);
                 if (HitSound != null)
                     Instantiate(HitSound, transform.position, transform.rotation);
