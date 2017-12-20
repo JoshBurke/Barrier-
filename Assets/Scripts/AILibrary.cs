@@ -130,8 +130,19 @@ public class AILibrary : MonoBehaviour {
     public GameObject ding;
     public string attackMethod;
 
+    private GameObject righthand;
+    GameObject thefireball;
+    private Vector3 previousPosition;
+    private Vector3 movingdirection;
+    private float movingspeed = 1;
+    private bool noDirectionYet = true;
+    private bool beforeFireThrow;
+    //private bool canThrowFireBall = false;
+
     public void Start()
     {
+        righthand = GameObject.Find("RightHandAnchor");
+
         //Debug.Log("start");
         enemy = GameObject.FindGameObjectWithTag("Enemy");
         enemySprite = enemy.transform.Find("BodySprite").GetComponent<SpriteRenderer>();
@@ -159,6 +170,8 @@ public class AILibrary : MonoBehaviour {
         speechQueue = new Queue<SpeechEntry>();
         player = GameObject.Find("OVRPlayerController");
         attackMethod = "PlayerShot";
+        //attackMethod = "FireMagic";
+
         /*
         if(player == null)
         {
@@ -251,6 +264,10 @@ public class AILibrary : MonoBehaviour {
         playerAttackManager();
         musicFadeManager();
         endFightManager();
+        if (attackMethod == "FireMagic")
+        {
+            FireballHandler();
+        }
     }
 
     private void inputManager()
@@ -299,7 +316,11 @@ public class AILibrary : MonoBehaviour {
             }
         }
     }
-
+    /*private void enableFireBallThrow()
+    {
+        canThrowFireBall = true;
+        print("here!");
+    }*/
     private void playerAttackManager()
     {
         if (lightning)
@@ -398,6 +419,8 @@ public class AILibrary : MonoBehaviour {
                     {
                         closeAttackMenu();
                         onAttackButtonPress();
+                        Invoke("enableFireBallThrow", (float)0.5);
+
                         if (enemy.name == "Asgore(Clone)")
                         {
                             giveCurveShot();
@@ -414,6 +437,7 @@ public class AILibrary : MonoBehaviour {
             }
             if (!isPlayerAttacking)
                 return;
+
 
             if (isPlayerShotLive)
             {
@@ -450,7 +474,7 @@ public class AILibrary : MonoBehaviour {
                         attackCallback();
                 }
             }
-            else if (domPressedThisFrame && enemy.name != "Asgore(Clone)")
+            else if (domPressedThisFrame && enemy.name != "Asgore(Clone)" )
             {
                 playerFire();
             }
@@ -692,13 +716,67 @@ public class AILibrary : MonoBehaviour {
     {
         healthBar.SetActive(false);
     }
+    private void FireballHandler()
+    {
+        /*if (!isPlayerAttacking || !canThrowFireBall)
+        {
+            return;
+        }*/
+
+        if (!isPlayerAttacking )
+        {
+            return;
+        }
+
+        if (thefireball == null) //while no fire ball yet
+        {
+            if (GetDominantTriggerDown())
+            {
+                beforeFireThrow = true;
+                if (beforeFireThrow && thefireball == null)
+                {
+                    thefireball = (GameObject)Instantiate(Resources.Load("FireMagic"), righthand.transform.position, righthand.transform.rotation);
+                    Destroy(thefireball, 3);
+                    noDirectionYet = true;
+                }
+            }
+        }
+        else // fire ball created
+        {
+            if (!GetDominantTriggerDown()) //if released grip
+            {
+                //print("should be moving:" + movingdirection);
+                thefireball.transform.position = thefireball.transform.position + movingdirection * movingspeed;
+                if (noDirectionYet)
+                {
+                    movingdirection = righthand.transform.position - previousPosition;
+                    noDirectionYet = false;
+                }
+            }
+            else  //if holding grip
+            {
+                thefireball.transform.position = righthand.transform.position;
+            }
+        }
+
+        previousPosition = righthand.transform.position;
+    }
 
     private void playerFire()
     {
+        //allowFireBallCreation = true;
+
         allowFire = false;
+
         frozenAttackTime = Time.fixedTime - playerAttackStartTime;
-        playerShot = (GameObject)Instantiate(Resources.Load(attackMethod), activePlayerPointer.transform.position, activePlayerPointer.transform.rotation);
-        if (attackMethod != "PlayerShot") { attackMethod = "PlayerShot"; }
+        if (attackMethod != "FireMagic")
+        {
+            playerShot = (GameObject)Instantiate(Resources.Load(attackMethod), activePlayerPointer.transform.position, activePlayerPointer.transform.rotation);
+        }
+
+        if (attackMethod != "PlayerShot") { //switch back to playershot
+            attackMethod = "PlayerShot";
+        }
         //Object.Destroy(activePlayerPointer);
         //activePlayerPointer = null;
         isPlayerShotLive = true;

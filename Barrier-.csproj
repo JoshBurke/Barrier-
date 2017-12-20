@@ -204,6 +204,7 @@
     <Compile Include="Assets\Scripts\Spawner.cs" />
     <Compile Include="Assets\Scripts\Speech.cs" />
     <Compile Include="Assets\Scripts\teleportation.cs" />
+    <Compile Include="Assets\Scripts\Throwfireball.cs" />
     <Compile Include="Assets\Scripts\UndyneAI.cs" />
     <Compile Include="Assets\SpaceSkies Free\Demo\Scripts\LookCamera.cs" />
     <Compile Include="Assets\SpaceSkies Free\Demo\Scripts\SkyboxChanger.cs" />
