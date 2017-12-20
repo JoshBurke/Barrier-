@@ -29,6 +29,7 @@ public class Shield : MonoBehaviour {
 	void Update () {
         if(isSwordEnabled)
         {
+            /*
             if (this.gameObject.name == "LeftShield")
             {
                 if (OVRInput.GetDown(OVRInput.Button.Three))
@@ -48,7 +49,7 @@ public class Shield : MonoBehaviour {
                     }
                 }
             }
-
+            */
             if (this.gameObject.name == "RightShield")
             {
                 if (OVRInput.GetDown(OVRInput.Button.One))
@@ -122,5 +123,15 @@ public class Shield : MonoBehaviour {
     public void DeMagnetize()
     {
         isMagnet = false;
+    }
+
+    public void enableSword()
+    {
+        isSwordEnabled = true;
+    }
+
+    public void disableSword()
+    {
+        isSwordEnabled = false;
     }
 }

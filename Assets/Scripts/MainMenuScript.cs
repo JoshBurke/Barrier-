@@ -26,6 +26,8 @@ public class MainMenuScript : MonoBehaviour {
     private MenuButtonHighligher sansButtonHighlighter;
     private GameObject quitButton;
     private MenuButtonHighligher quitButtonHighlighter;
+    private GameObject asgoreButton;
+    private MenuButtonHighligher asgoreButtonHighlighter;
     /*private GameObject cheatButton;
     private MenuButtonHighligher cheatButtonHighlighter;
     private GameObject megaCheatButton;
@@ -56,6 +58,7 @@ public class MainMenuScript : MonoBehaviour {
     private GameObject undyne;
     private GameObject sans;
     private GameObject lightning;
+    private GameObject asgore;
 
     private GameObject[] credits;
 
@@ -113,6 +116,8 @@ public class MainMenuScript : MonoBehaviour {
         sansButtonHighlighter = sansButton.GetComponent<MenuButtonHighligher>();
         quitButton = transform.Find("QuitButton").gameObject;
         quitButtonHighlighter = quitButton.GetComponent<MenuButtonHighligher>();
+        asgoreButton = transform.Find("AsgoreButton").gameObject;
+        asgoreButtonHighlighter = asgoreButton.GetComponent<MenuButtonHighligher>();
         /*cheatButton = transform.Find("CheatButton").gameObject;
         cheatButtonHighlighter = cheatButton.GetComponent<MenuButtonHighligher>();
         megaCheatButton = transform.Find("MegaCheatButton").gameObject;
@@ -252,6 +257,7 @@ public class MainMenuScript : MonoBehaviour {
         papyrusButton.SetActive(true);
         undyneButton.SetActive(true);
         sansButton.SetActive(true);
+        asgoreButton.SetActive(true);
         quitButton.SetActive(true);
         //cheatButton.SetActive(true);
         //megaCheatButton.SetActive(true);
@@ -265,7 +271,7 @@ public class MainMenuScript : MonoBehaviour {
         downButton.SetActive(true);
         continueButton.SetActive(false);
 
-        godButton.SetActive(false);
+        godButton.SetActive(true);
         /*if(killedCount == 0)
             papyrusKillButton.SetActive(true);
         else if(killedCount == 1)
@@ -275,6 +281,18 @@ public class MainMenuScript : MonoBehaviour {
         foreach(GameObject obj in credits)
         {
             obj.SetActive(false);
+        }
+
+        if (activePlayerPointer == null)
+        {
+            Transform attachShield = GameObject.Find("RightShield").transform;
+            activePlayerPointer = Instantiate(playerPointer, attachShield.position, attachShield.rotation, attachShield);
+        }
+
+        GameObject tmp = GameObject.Find("PlayerSword(Clone)");
+        if(tmp != null)
+        {
+            GameObject.Destroy(tmp);
         }
     }
 
@@ -310,6 +328,12 @@ public class MainMenuScript : MonoBehaviour {
         if(playerPointer == null)
         {
             playerPointer = (GameObject)Resources.Load("PlayerPointer");
+        }
+
+        GameObject pointer = GameObject.Find("PlayerSword(Clone)");
+        if (pointer != null)
+        {
+            Object.Destroy(pointer);
         }
         activePlayerPointer = Instantiate(playerPointer, attachShield.position, attachShield.rotation, attachShield);
         isEnabled = true;
@@ -357,6 +381,12 @@ public class MainMenuScript : MonoBehaviour {
     }
     // </Robert>
 
+    private void startAsgore()
+    {
+        asgore.GetComponent<AILibrary>().RegisterAttackButtons(fightButton, mercyButton);
+        asgore.GetComponent<AsgoreAI>().RegisterTotalKills(killedCount);
+    }
+
     private void buttonManager()
     {
         /*if(tutorialEnabled)
@@ -402,6 +432,15 @@ public class MainMenuScript : MonoBehaviour {
                 lightning = (GameObject)Instantiate(Resources.Load("Lightning"));
                 Invoke("startLightning", 0.01f);
             } // </Robert>
+            // <X>
+            else if(asgoreButtonHighlighter.IsHovered())
+            {
+                closeMenu(true);
+                enemyFought = 4;
+                asgore = (GameObject)Instantiate(Resources.Load("Asgore"));
+                Invoke("startAsgore", 0.01f);
+            }
+            // </X>
             else if (quitButtonHighlighter.IsHovered())
             {
                 Application.Quit();
@@ -429,10 +468,11 @@ public class MainMenuScript : MonoBehaviour {
                 playerInfo.ResetHealth();
                 playMusic((AudioClip)Resources.Load("Small Shock"));
             }*/
-            /*else if (godButtonHighlighter.IsHovered())
+            else if (godButtonHighlighter.IsHovered())
             {
                 playerInfo.GodModeToggle();
             }
+            /*
             else if (papyrusKillButtonHighlighter.IsHovered())
             {
                 enemyFought = 0;
@@ -557,6 +597,9 @@ public class MainMenuScript : MonoBehaviour {
         sansButton.SetActive(false);
         quitButtonHighlighter.ForceDeselect();
         quitButton.SetActive(false);
+
+        asgoreButtonHighlighter.ForceDeselect();
+        asgoreButton.SetActive(false);
 
         NewBossButtonHighlighter.ForceDeselect();
         NewBossButton.SetActive(false);

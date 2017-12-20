@@ -109,9 +109,17 @@ public class teleportation : MonoBehaviour {
             {
                 targetY = -10.0f;
             }
-            timeElapsed = 0.0f;
-            GameObject.Find("CenterEyeAnchor").GetComponent<flush>().flushScreen();
-            Invoke("move", 0.35f);
+
+            if (targetX > 10.0f || targetX < -10.0f || targetY > 0.0f || targetY < -10.0f)
+            {
+
+            }
+            else
+            {
+                timeElapsed = 0.0f;
+                GameObject.Find("CenterEyeAnchor").GetComponent<flush>().flushScreen();
+                Invoke("move", 0.25f);
+            }
         }
     }
 
@@ -119,5 +127,15 @@ public class teleportation : MonoBehaviour {
     {
         this.transform.position = new Vector3(targetX, 1.0f, targetY);
         menu.transform.position = new Vector3(targetX, 1.0f, targetY);
+    }
+
+    public void enableTeleportation()
+    {
+        this.teleportationEnabled = true;
+    }
+
+    public void disableTeleportation()
+    {
+        this.teleportationEnabled = false;
     }
 }

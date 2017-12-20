@@ -60,7 +60,14 @@ public class PlayerProjectile : MonoBehaviour
             damage *= MaxDamage;
             damage = Mathf.Max(0.0f, damage);
             GameObject.FindGameObjectWithTag("Enemy").GetComponent<AILibrary>().GiveRawDamage(damage);
-            Object.Destroy(this.gameObject);
+            if (GameObject.Find("Asgore(Clone)") == false)
+            {
+                Object.Destroy(this.gameObject);
+            }
+            else
+            {
+                Object.Destroy(this.transform.parent.gameObject);
+            }
         }
     }
 }

@@ -398,6 +398,10 @@ public class AILibrary : MonoBehaviour {
                     {
                         closeAttackMenu();
                         onAttackButtonPress();
+                        if (enemy.name == "Asgore(Clone)")
+                        {
+                            giveCurveShot();
+                        }
                         return;
                     }
                     else if (mercyButtonHighlighter.IsHovered())
@@ -433,7 +437,7 @@ public class AILibrary : MonoBehaviour {
                         isEnemyDodging = false;
                     }
                 }
-                if (playerShot == null)
+                if (playerShot == null && GameObject.Find("PlayerCurvedShot(Clone)") == false)
                 {
                     dingTime = Time.fixedTime + 1.0f;
                     isPlayerAttacking = false;
@@ -446,7 +450,7 @@ public class AILibrary : MonoBehaviour {
                         attackCallback();
                 }
             }
-            else if (domPressedThisFrame)
+            else if (domPressedThisFrame && enemy.name != "Asgore(Clone)")
             {
                 playerFire();
             }
@@ -526,6 +530,12 @@ public class AILibrary : MonoBehaviour {
             resetAttackButtons();
         }
         GameObject.Find("MainMenu").GetComponent<MainMenuScript>().OpenMenu(isDead);
+        GameObject pointer = GameObject.Find("PlayerSword(Clone)");
+        if (pointer != null)
+        {
+            Object.Destroy(pointer);
+        }
+        GameObject.Find("teleportationManager").GetComponent<teleportation>().disableTeleportation();
         Object.Destroy(this.gameObject);
     }
 
@@ -688,6 +698,7 @@ public class AILibrary : MonoBehaviour {
         allowFire = false;
         frozenAttackTime = Time.fixedTime - playerAttackStartTime;
         playerShot = (GameObject)Instantiate(Resources.Load(attackMethod), activePlayerPointer.transform.position, activePlayerPointer.transform.rotation);
+        if (attackMethod != "PlayerShot") { attackMethod = "PlayerShot"; }
         //Object.Destroy(activePlayerPointer);
         //activePlayerPointer = null;
         isPlayerShotLive = true;
@@ -708,6 +719,12 @@ public class AILibrary : MonoBehaviour {
             immediateAttackCallback();
             immediateAttackCallback = null;
         }
+    }
+
+    public void stopCrossheirMoving()
+    {
+        leftCrossheir.GetComponent<CrossheirScript>().setMoving(false);
+        rightCrossheir.GetComponent<CrossheirScript>().setMoving(false);
     }
 
     private void lightningPlayerFire()
@@ -759,6 +776,16 @@ public class AILibrary : MonoBehaviour {
         }
         else
             openAttackMenu(finisher, true);
+    }
+
+    public void giveCurveShot()
+    {
+        GameObject.Find("PlayerSword(Clone)").GetComponent<Sword>().giveShot();
+    }
+
+    public void setShotLive(bool b)
+    {
+        isPlayerShotLive = b;
     }
 
     private void openAttackMenu(bool finisher, bool ignoreMercyHandle = false)

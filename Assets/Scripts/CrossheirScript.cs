@@ -12,6 +12,7 @@ public class CrossheirScript : MonoBehaviour {
     private float lastTimeChanged;
     public bool isLightning;
     private SpriteRenderer renderer;
+    public bool moving;
 	void Start () {
         origPos = transform.position;
         xVariance = 1.2f;
@@ -19,6 +20,7 @@ public class CrossheirScript : MonoBehaviour {
         interval = 4.0f;
         lastTimeChanged = Time.fixedTime;
         renderer = this.GetComponent<SpriteRenderer>();
+        moving = true;
 	}
 	
 	void Update () {
@@ -35,7 +37,11 @@ public class CrossheirScript : MonoBehaviour {
         }
         else
         {
-            transform.position = origPos + new Vector3(parentLibrary.GetCrossheirPosition() * posNegMod, 0, 0);
+            //print(moving);
+            if (moving)
+            {
+                transform.position = origPos + new Vector3(parentLibrary.GetCrossheirPosition() * posNegMod, 0, 0);
+            }
         }
 	}
 
@@ -63,5 +69,10 @@ public class CrossheirScript : MonoBehaviour {
             renderer.color = col;
             yield return new WaitForEndOfFrame();
         }
+    }
+
+    public void setMoving(bool b)
+    {
+        this.moving = b;
     }
 }

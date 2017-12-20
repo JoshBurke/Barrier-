@@ -39,7 +39,7 @@ public class Projectile : MonoBehaviour
     void OnTriggerEnter(Collider collider)
     {
         GameObject other = collider.gameObject;
-        if (other.tag == "Shield")
+        if (other.tag == "Shield" || other.name == "PlayerSword(Clone)")
         {
             var blowup = Instantiate(BlowUpParticles, transform.position, transform.rotation);
             Destroy(blowup, 1);

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 95caab597ce325c4fb39df5c0423b934
+timeCreated: 1513734318
+licenseType: Free
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - lib: {instanceID: 0}
+  - trackingSphere: {fileID: 1859317697835760, guid: 113b07245b21a2b43a2cd48a95769eaa,
+      type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
