@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class RadialMenuHandler : MonoBehaviour {
 
+    public bool DEFENSE_ENABLED = true;
+    public bool MAGIC_ENABLED = true;
     public GameObject leftShield;
     public GameObject radialMenu;
     public GameObject magicRadialMenu;
@@ -27,7 +29,7 @@ public class RadialMenuHandler : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (OVRInput.GetDown(OVRInput.RawButton.X) && !defenseMenuDisplayed && !magicMenuDisplayed)
+        if (OVRInput.GetDown(OVRInput.RawButton.X) && !defenseMenuDisplayed && !magicMenuDisplayed && DEFENSE_ENABLED)
         {
             defenseMenuDisplayed = true;
             defenseMenu = Instantiate(radialMenu, menuParent);
@@ -45,7 +47,7 @@ public class RadialMenuHandler : MonoBehaviour {
             }
         }
 
-        if (OVRInput.GetDown(OVRInput.RawButton.Y) && !magicMenuDisplayed && !defenseMenuDisplayed)
+        if (OVRInput.GetDown(OVRInput.RawButton.Y) && !magicMenuDisplayed && !defenseMenuDisplayed && MAGIC_ENABLED)
         {
             magicMenuDisplayed = true;
             magicMenu = Instantiate(magicRadialMenu, menuParent);

@@ -7,7 +7,7 @@ public class DefensePowerups : MonoBehaviour {
 
     /** Variables essential for script generic function **/
 
-    //public PlayerInfo playerInfo;
+    public PlayerInfo playerInfo;
     public GameObject rightShield;
 
     public enum PowerUp { NONE, MAGNET, BOOM, SLOW, SHIELD}
@@ -30,13 +30,19 @@ public class DefensePowerups : MonoBehaviour {
     private ParticleSystem particles;
     private bool timeLerping = false;
     private bool pitchLerping = false;
+    private int shieldAmount = 50;
+
+    private float maxMagnetTime = 30; //seconds
+    private float magnetTime = 0;
+    private float maxSlowTime = 30;
+    private float slowTime = 0;
 
     private void Start()
     {
         if (!rightShield)
             rightShield = GameObject.Find("RightShield");
-        //if (!playerInfo)
-        //    playerInfo = GameObject.Find("OVRPlayerController").GetComponent<PlayerInfo>();
+        if (!playerInfo)
+            playerInfo = GameObject.Find("playerCollider").GetComponent<PlayerInfo>();
         areProjectilesReset = true;
         particles = rightShield.GetComponent<ParticleSystem>();
     }
@@ -79,7 +85,7 @@ public class DefensePowerups : MonoBehaviour {
                 }
                 break;
             case PowerUp.SHIELD:
-                if (OVRInput.Get(OVRInput.RawButton.A) && ShieldAvailable)
+                if (/*OVRInput.Get(OVRInput.RawButton.A) &&*/ ShieldAvailable)
                 {
                     Shield();
                 }
@@ -87,6 +93,24 @@ public class DefensePowerups : MonoBehaviour {
         }
 
         CheckNormalConditions();
+    }
+
+    public void ResetAvailability()
+    {
+        MagnetAvailable = true;
+        BoomAvailable = true;
+        SlowAvailable = true;
+        ShieldAvailable = true;
+        magnetTime = 0;
+        slowTime = 0;
+    }
+
+    public void SetAvailablePowerups(bool magnet, bool boom, bool slow, bool shield)
+    {
+        MagnetAvailable = magnet;
+        BoomAvailable = boom;
+        SlowAvailable = slow;
+        ShieldAvailable = shield;
     }
 
     void CheckNormalConditions()
@@ -116,6 +140,11 @@ public class DefensePowerups : MonoBehaviour {
             p.transform.LookAt(rightShield.transform);
         }
         areProjectilesReset = false;
+        if(magnetTime >= maxMagnetTime)
+        {
+            MagnetAvailable = false;
+        }
+        magnetTime += Time.deltaTime;
     }
 
     void Boom()
@@ -141,6 +170,11 @@ public class DefensePowerups : MonoBehaviour {
             StartCoroutine(LerpPitch(0.5f));
         }
         screenTint.enabled = true;
+        if(slowTime >= maxSlowTime)
+        {
+            SlowAvailable = false;
+        }
+        slowTime += Time.deltaTime;
     }
 
     IEnumerator LerpTime(float timeScale)
@@ -174,7 +208,13 @@ public class DefensePowerups : MonoBehaviour {
 
     void Shield()
     {
-        //Add shield
+        playerInfo.GiveShield(shieldAmount);
+        ShieldAvailable = false;
+    }
+
+    public void SetShieldAmount(int amt)
+    {
+        shieldAmount = amt;
     }
 
     //This method resets projectiles to their original heading (toward the player)

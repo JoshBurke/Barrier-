@@ -16892,6 +16892,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d7a5677ec09376459ebead97ec348c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DEFENSE_ENABLED: 1
+  MAGIC_ENABLED: 1
   leftShield: {fileID: 450524332}
   radialMenu: {fileID: 1647815272559648, guid: de82c9cda20e9c142bc754dc361cea6c, type: 2}
   magicRadialMenu: {fileID: 1290037871547712, guid: 2eee3c4c8474fa34aa7c5bab2010c709,
@@ -16911,6 +16913,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25f28bd91a85b4c4a99dcbdb9ec773c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerInfo: {fileID: 1923993463}
   rightShield: {fileID: 210300757}
   currPowerUp: 0
   MagnetAvailable: 1

@@ -5,6 +5,8 @@ using UnityEngine;
 public class PlayerInfo : MonoBehaviour {
     public int MaxHealth = 40;
     private int health;
+    private int shield;
+    private bool hasShield;
 
     private bool isGodModeActive;
 
@@ -12,14 +14,44 @@ public class PlayerInfo : MonoBehaviour {
 
 	void Start () {
         health = MaxHealth;
+        hasShield = false;
+        shield = 0;
         isGodModeActive = false;
         mainMenu = GameObject.Find("MainMenu").GetComponent<MainMenuScript>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		
+        ShieldUpdate();
 	}
+
+    void ShieldUpdate()
+    {
+        if (shield > 0)
+        {
+            hasShield = true;
+        }
+        else
+        {
+            hasShield = false;
+        }
+    }
+
+    public bool HasShield()
+    {
+        return hasShield;
+    }
+
+    public int GetShield()
+    {
+        return shield;
+    }
+
+    public void GiveShield(int amt)
+    {
+        shield += amt;
+        ShieldUpdate();
+    }
 
     public void GodModeToggle()
     {
@@ -52,9 +84,23 @@ public class PlayerInfo : MonoBehaviour {
         {
             return; // Nope.
         }
-        health -= amount;
+        if(shield >= amount)
+        {
+            shield -= amount;
+            ShieldUpdate();
+        } else if(shield > 0)
+        {
+            health -= amount - shield;
+            shield = 0;
+            ShieldUpdate();
+        }
+        else
+        {
+            health -= amount;
+        }
         health = Mathf.Min(health, MaxHealth);
         health = Mathf.Max(health, 0);
+        ShieldUpdate();
         if (health == 0)
         {
             die();

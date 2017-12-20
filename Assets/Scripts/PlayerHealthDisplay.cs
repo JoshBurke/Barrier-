@@ -25,6 +25,14 @@ public class PlayerHealthDisplay : MonoBehaviour {
             return;
         }
         int curHealth = playerInfo.GetHealth();
+        if (playerInfo.HasShield())
+        {
+            curHealth += playerInfo.GetShield();
+            healthText.color = Color.cyan;
+        } else
+        {
+            healthText.color = Color.white;
+        }
         maxHealth = playerInfo.MaxHealth;
         healthText.text = curHealth.ToString();
         float healthRatio = (float)curHealth / (float)maxHealth;
