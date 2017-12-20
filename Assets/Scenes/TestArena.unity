@@ -5672,7 +5672,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 189400145
+  randomSeed: 624687766
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -16892,7 +16892,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d7a5677ec09376459ebead97ec348c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DEFENSE_ENABLED: 1
+  DEFENSE_ENABLED: 0
   MAGIC_ENABLED: 1
   leftShield: {fileID: 450524332}
   radialMenu: {fileID: 1647815272559648, guid: de82c9cda20e9c142bc754dc361cea6c, type: 2}
@@ -18254,6 +18254,7 @@ MonoBehaviour:
   HUD_NudgeAmount: 0.05
   Max_HUD_Height: 1.25
   Min_HUD_Height: 0.75
+  defenseScript: {fileID: 1563303855}
   origHeart: {fileID: 21300000, guid: 61b4b8d3198c25c4298b4f37e17a4694, type: 3}
   brokenHeart: {fileID: 21300000, guid: df954163b6514984789c31e968df08c2, type: 3}
   heartCut: {fileID: 1854661106445482, guid: 72948977fd3cde4448c2d93ced0c43e5, type: 2}

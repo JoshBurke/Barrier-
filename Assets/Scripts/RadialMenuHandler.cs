@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class RadialMenuHandler : MonoBehaviour {
 
-    public bool DEFENSE_ENABLED = true;
+    public bool DEFENSE_ENABLED = false;
     public bool MAGIC_ENABLED = true;
     public GameObject leftShield;
     public GameObject radialMenu;
@@ -29,6 +29,7 @@ public class RadialMenuHandler : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        DEFENSE_ENABLED = defenseScript.IsEnabled();
         if (OVRInput.GetDown(OVRInput.RawButton.X) && !defenseMenuDisplayed && !magicMenuDisplayed && DEFENSE_ENABLED)
         {
             defenseMenuDisplayed = true;

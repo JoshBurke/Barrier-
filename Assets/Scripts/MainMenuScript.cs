@@ -8,6 +8,7 @@ public class MainMenuScript : MonoBehaviour {
     public float HUD_NudgeAmount = 0.15f;
     public float Max_HUD_Height = 1.5f;
     public float Min_HUD_Height = 0.75f;
+    public DefensePowerups defenseScript;
 
     private GameObject player;
     private PlayerInfo playerInfo;
@@ -102,6 +103,7 @@ public class MainMenuScript : MonoBehaviour {
     void Start () {
         //player = GameObject.FindGameObjectWithTag("Player");
         player = GameObject.Find("playerCollider");
+        defenseScript = GameObject.Find("OVRPlayerController").GetComponent<DefensePowerups>();
         playerInfo = player.GetComponent<PlayerInfo>();
         playerController = GameObject.Find("OVRPlayerController").GetComponent<OVRPlayerController>();
         playerPointer = (GameObject)Resources.Load("PlayerPointer");
@@ -360,12 +362,16 @@ public class MainMenuScript : MonoBehaviour {
     {
         undyne.GetComponent<AILibrary>().RegisterAttackButtons(fightButton, mercyButton);
         undyne.GetComponent<UndyneAI>().RegisterTotalKills(killedCount);
+        defenseScript.Enable();
+        defenseScript.ResetAvailability();
     }
 
     private void startSans()
     {
         sans.GetComponent<AILibrary>().RegisterAttackButtons(fightButton, mercyButton);
         sans.GetComponent<SansAI>().RegisterTotalKills(killedCount);
+        defenseScript.Enable();
+        defenseScript.ResetAvailability();
     }
 
     // <Robert>
@@ -373,11 +379,14 @@ public class MainMenuScript : MonoBehaviour {
     {
         lightning.GetComponent<AILibrary>().RegisterAttackButtons(fightButton, mercyButton);
         lightning.GetComponent<LightningAI>().RegisterTotalKills(killedCount);
+        defenseScript.Enable();
+        defenseScript.ResetAvailability();
     }
 
     private void startPapyrusTutorial()
     {
         papyrusTutorial.GetComponent<AILibrary>().RegisterAttackButtons(fightButton, mercyButton);
+        defenseScript.Disable();
     }
     // </Robert>
 
@@ -385,6 +394,7 @@ public class MainMenuScript : MonoBehaviour {
     {
         asgore.GetComponent<AILibrary>().RegisterAttackButtons(fightButton, mercyButton);
         asgore.GetComponent<AsgoreAI>().RegisterTotalKills(killedCount);
+        defenseScript.Disable();
     }
 
     private void buttonManager()

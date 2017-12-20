@@ -37,6 +37,8 @@ public class DefensePowerups : MonoBehaviour {
     private float maxSlowTime = 30;
     private float slowTime = 0;
 
+    private bool isEnabled = false;
+
     private void Start()
     {
         if (!rightShield)
@@ -45,6 +47,21 @@ public class DefensePowerups : MonoBehaviour {
             playerInfo = GameObject.Find("playerCollider").GetComponent<PlayerInfo>();
         areProjectilesReset = true;
         particles = rightShield.GetComponent<ParticleSystem>();
+    }
+
+    public bool IsEnabled()
+    {
+        return isEnabled;
+    }
+
+    public void Enable()
+    {
+        isEnabled = true;
+    }
+
+    public void Disable()
+    {
+        isEnabled = false;
     }
 
     void Update()
