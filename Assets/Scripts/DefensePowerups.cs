@@ -23,6 +23,8 @@ public class DefensePowerups : MonoBehaviour {
 
     public RawImage screenTint;
     public AudioSource music;
+    public Transform explosionTransform;
+    public GameObject explosion;
 
     private bool areProjectilesReset;
     private ParticleSystem particles;
@@ -120,7 +122,7 @@ public class DefensePowerups : MonoBehaviour {
     {
         GameObject[] projs = GameObject.FindGameObjectsWithTag("Projectile");
         if (projs.Length == 0) return;
-        //Boom animation
+        GameObject boom = Instantiate(explosion, explosionTransform);
         foreach(GameObject p in projs)
         {
             Destroy(p);
