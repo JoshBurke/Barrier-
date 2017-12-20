@@ -85,7 +85,10 @@ public class Sword : MonoBehaviour {
         Vector3 p = new Vector3(0.0f, 0.0f, 0.0f);
         Vector3 prev = (Vector3)positions[0];
         p += (Vector3)positions[0];
-        p += (Vector3)positions[positions.Count - 1];
+        if (positions.Count >= 1)
+        {
+            p += (Vector3)positions[positions.Count - 1];
+        }
         p = p / 2.0f;
 
         float tmp = Mathf.Rad2Deg * Mathf.Atan((((Vector3)positions[0]).y - p.y) / (((Vector3)positions[0]).x - p.x));
@@ -96,7 +99,10 @@ public class Sword : MonoBehaviour {
         Vector3 r = new Vector3(0.0f, 0.0f, 0.0f);
         prev = (Vector3)rotations[0];
         r += (Vector3)rotations[0];
-        r += (Vector3)rotations[rotations.Count - 1];
+        if (rotations.Count >= 1)
+        {
+            r += (Vector3)rotations[rotations.Count - 1];
+        }
         //print((Vector3)rotations[0]);
         //print((Vector3)rotations[rotations.Count - 1]);
         r = r / 2.0f;
@@ -116,5 +122,15 @@ public class Sword : MonoBehaviour {
     public void giveShot()
     {
         this.shotNum += 1;
+    }
+
+    public void changeColorTo(Color c)
+    {
+        this.GetComponent<VolumetricLines.VolumetricLineBehavior>().LineColor = c;
+    }
+
+    public void changeColorBackToNormal()
+    {
+        this.GetComponent<VolumetricLines.VolumetricLineBehavior>().LineColor = normalColor;
     }
 }

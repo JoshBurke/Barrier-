@@ -106,7 +106,7 @@ public class ZigzagLazer : MonoBehaviour {
         }
         else if (other.tag == "Player")
         {
-            GameObject.Find("OVRPlayerController").GetComponent<PlayerInfo>().Damage(Damage);
+            GameObject.Find("playerCollider").GetComponent<PlayerInfo>().Damage(Damage);
             if (HitSound != null)
                 Instantiate(HitSound, transform.position, transform.rotation);
             clean();

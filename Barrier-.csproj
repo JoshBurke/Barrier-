@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{2FC3321E-F75B-B443-E1BF-68B1D3420620}</ProjectGuid>
+    <ProjectGuid>{FC0FE523-9A3C-74C3-8CDC-1D91B7B87ADF}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AssemblyName>Assembly-CSharp</AssemblyName>
     <FileAlignment>512</FileAlignment>
@@ -13,13 +13,11 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile>
-    </CompilerResponseFile>
+    <CompilerResponseFile></CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows64:19</UnityBuildTarget>
     <UnityVersion>2017.1.0p4</UnityVersion>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
     <LangVersion>4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -140,6 +138,14 @@
     <Compile Include="Assets\PyroParticles\Prefab\Script\FireProjectileScript.cs" />
     <Compile Include="Assets\PyroParticles\Prefab\Script\MeteorSwarmScript.cs" />
     <Compile Include="Assets\PyroParticles\Prefab\Script\SingleLineAttribute.cs" />
+    <Compile Include="Assets\Resources\CurvedBlaster.cs" />
+    <Compile Include="Assets\Resources\CurvedComponent.cs" />
+    <Compile Include="Assets\Resources\CurvedProjectile.cs" />
+    <Compile Include="Assets\Resources\PlayerCurvedShot.cs" />
+    <Compile Include="Assets\Resources\Sword.cs" />
+    <Compile Include="Assets\Resources\trackingSphere.cs" />
+    <Compile Include="Assets\Resources\ZigzagBlaster.cs" />
+    <Compile Include="Assets\Resources\ZigzagLazer.cs" />
     <Compile Include="Assets\SciFi level 2\Standard Assets\Character Controllers\Sources\Scripts\MouseLook.cs" />
     <Compile Include="Assets\SciFi level 2\Standard Assets\Image Effects (Pro Only)\BlurEffect.cs" />
     <Compile Include="Assets\SciFi level 2\Standard Assets\Image Effects (Pro Only)\ColorCorrectionEffect.cs" />
@@ -158,6 +164,7 @@
     <Compile Include="Assets\Scripts\Ability.cs" />
     <Compile Include="Assets\Scripts\AILibrary.cs" />
     <Compile Include="Assets\Scripts\AlertPosition.cs" />
+    <Compile Include="Assets\Scripts\AsgoreAI.cs" />
     <Compile Include="Assets\Scripts\BeamProjectile.cs" />
     <Compile Include="Assets\Scripts\BlasterSeries.cs" />
     <Compile Include="Assets\Scripts\CanonSeries.cs" />
@@ -220,6 +227,7 @@
     <None Include="Assets\OVR\Resources\Unlit Transparent Color.shader" />
     <None Include="Assets\OVR\Shaders\OVRColorRampAlpha.shader" />
     <None Include="Assets\OVR\Shaders\Unlit Crosshair.shader" />
+    <None Include="Assets\PyroParticles\Prefab\Materials\AdditiveTintable.shader" />
     <None Include="Assets\SciFi level 2\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\BlendModesOverlay.shader" />
     <None Include="Assets\SciFi level 2\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\BlurEffectConeTaps.shader" />
     <None Include="Assets\SciFi level 2\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\CameraMotionBlur.shader" />

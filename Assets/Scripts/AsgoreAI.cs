@@ -512,9 +512,9 @@ public class AsgoreAI : MonoBehaviour
         switch (turnCount)
         {
             case 1:
-                //lib.AddTextToQueue("You can't possibly understand what Papyrus means to us.", isThisHardMode);
+                lib.AddTextToQueue("You can't possibly understand what Papyrus means to us.", isThisHardMode);
                 //lib.AddTextToQueue("You can't possibly understand what Papyrus means to us.", tripleSpray2);
-                lib.AddTextToQueue("You can't possibly understand what Papyrus means to us.", theTwist2);
+                //lib.AddTextToQueue("You can't possibly understand what Papyrus means to us.", theTwist2);
                 break;
             case 2:
                 lib.AddTextToQueue("He's not much of a warrior... but he has a kind heart.", theTwist1);

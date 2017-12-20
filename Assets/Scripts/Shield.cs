@@ -92,6 +92,11 @@ public class Shield : MonoBehaviour {
         {
             isOverlapped = true;
             ren.material = OverlappedMat;
+            GameObject sword = GameObject.Find("PlayerSword(Clone)");
+            if (sword != null)
+            {
+                sword.GetComponent<Sword>().changeColorTo(OverlappedMat.color);
+            }
         }
     }
 
@@ -102,6 +107,11 @@ public class Shield : MonoBehaviour {
         {
             isOverlapped = false;
             ren.material = NormalMat;
+            GameObject sword = GameObject.Find("PlayerSword(Clone)");
+            if (sword != null)
+            {
+                sword.GetComponent<Sword>().changeColorBackToNormal();
+            }
         }
     }
 
