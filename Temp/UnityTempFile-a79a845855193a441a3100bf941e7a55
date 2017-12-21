@@ -1,0 +1,218 @@
+-debug
+-target:library
+-nowarn:0169
+-langversion:4
+-out:Temp\Assembly-CSharp.dll
+-unsafe
+-optimize
+-r:"C:\Program Files\Unity\Editor\Data\PlaybackEngines\windowsstandalonesupport/Managed/UnityEngine.dll"
+-r:"C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/Standalone/UnityEngine.UI.dll"
+-r:"C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Networking/Standalone/UnityEngine.Networking.dll"
+-r:"C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Timeline/Runtime/UnityEngine.Timeline.dll"
+-r:"Assets/CapturePanorama/Managed Plugins/System.Drawing.dll"
+-define:UNITY_5_3_OR_NEWER
+-define:UNITY_5_4_OR_NEWER
+-define:UNITY_5_5_OR_NEWER
+-define:UNITY_5_6_OR_NEWER
+-define:UNITY_2017_1_OR_NEWER
+-define:UNITY_2017_1_0
+-define:UNITY_2017_1
+-define:UNITY_2017
+-define:PLATFORM_ARCH_64
+-define:UNITY_64
+-define:ENABLE_AUDIO
+-define:ENABLE_CACHING
+-define:ENABLE_CLOTH
+-define:ENABLE_DUCK_TYPING
+-define:ENABLE_GENERICS
+-define:ENABLE_PVR_GI
+-define:ENABLE_MICROPHONE
+-define:ENABLE_MULTIPLE_DISPLAYS
+-define:ENABLE_PHYSICS
+-define:ENABLE_RUNTIME_NAVMESH_BUILDING
+-define:ENABLE_SPRITERENDERER_FLIPPING
+-define:ENABLE_SPRITES
+-define:ENABLE_TERRAIN
+-define:ENABLE_RAKNET
+-define:ENABLE_DIRECTOR
+-define:ENABLE_UNET
+-define:ENABLE_LZMA
+-define:ENABLE_UNITYEVENTS
+-define:ENABLE_WEBCAM
+-define:ENABLE_WWW
+-define:ENABLE_CLOUD_SERVICES_COLLAB
+-define:ENABLE_CLOUD_SERVICES_COLLAB_SOFTLOCKS
+-define:ENABLE_CLOUD_SERVICES_ADS
+-define:ENABLE_CLOUD_HUB
+-define:ENABLE_CLOUD_PROJECT_ID
+-define:ENABLE_CLOUD_SERVICES_USE_WEBREQUEST
+-define:ENABLE_CLOUD_SERVICES_UNET
+-define:ENABLE_CLOUD_SERVICES_BUILD
+-define:ENABLE_CLOUD_LICENSE
+-define:ENABLE_WEBSOCKET_CLIENT
+-define:ENABLE_DIRECTOR_AUDIO
+-define:ENABLE_TIMELINE
+-define:ENABLE_EDITOR_METRICS
+-define:ENABLE_EDITOR_METRICS_CACHING
+-define:ENABLE_NATIVE_ARRAY
+-define:ENABLE_SPRITE_MASKING
+-define:INCLUDE_DYNAMIC_GI
+-define:INCLUDE_GI
+-define:ENABLE_MONO_BDWGC
+-define:PLATFORM_SUPPORTS_MONO
+-define:RENDER_SOFTWARE_CURSOR
+-define:INCLUDE_PUBNUB
+-define:ENABLE_PLAYMODE_TESTS_RUNNER
+-define:ENABLE_VIDEO
+-define:ENABLE_RMGUI
+-define:ENABLE_CUSTOM_RENDER_TEXTURE
+-define:ENABLE_STYLE_SHEETS
+-define:UNITY_STANDALONE_WIN
+-define:UNITY_STANDALONE
+-define:ENABLE_SUBSTANCE
+-define:ENABLE_RUNTIME_GI
+-define:ENABLE_MOVIES
+-define:ENABLE_NETWORK
+-define:ENABLE_CRUNCH_TEXTURE_COMPRESSION
+-define:ENABLE_UNITYWEBREQUEST
+-define:ENABLE_CLOUD_SERVICES
+-define:ENABLE_CLOUD_SERVICES_ANALYTICS
+-define:ENABLE_CLOUD_SERVICES_PURCHASING
+-define:ENABLE_CLOUD_SERVICES_CRASH_REPORTING
+-define:ENABLE_EVENT_QUEUE
+-define:ENABLE_CLUSTERINPUT
+-define:ENABLE_VR
+-define:ENABLE_WEBSOCKET_HOST
+-define:ENABLE_MONO
+-define:NET_2_0
+Assets/CapturePanorama/CapturePanorama.cs
+Assets/CapturePanorama/Scripts/Icosphere.cs
+Assets/CapturePanorama/Scripts/ImageEffectCopyCamera.cs
+Assets/CapturePanorama/Scripts/ReadPanoConfig.cs
+Assets/CapturePanorama/Scripts/ScreenFadeControl.cs
+Assets/Explosion/GraphicExplosion.cs
+Assets/OVR/Scripts/OVRBoundary.cs
+Assets/OVR/Scripts/OVRCameraRig.cs
+Assets/OVR/Scripts/OVRCommon.cs
+Assets/OVR/Scripts/OVRDebugHeadController.cs
+Assets/OVR/Scripts/OVRDisplay.cs
+Assets/OVR/Scripts/OVRHaptics.cs
+Assets/OVR/Scripts/OVRHapticsClip.cs
+Assets/OVR/Scripts/OVRInput.cs
+Assets/OVR/Scripts/OVRLint.cs
+Assets/OVR/Scripts/OVRManager.cs
+Assets/OVR/Scripts/OVROnCompleteListener.cs
+Assets/OVR/Scripts/OVROverlay.cs
+Assets/OVR/Scripts/OVRPlatformMenu.cs
+Assets/OVR/Scripts/OVRPlugin.cs
+Assets/OVR/Scripts/OVRProfile.cs
+Assets/OVR/Scripts/OVRTouchpad.cs
+Assets/OVR/Scripts/OVRTracker.cs
+Assets/OVR/Scripts/Util/OVRChromaticAberration.cs
+Assets/OVR/Scripts/Util/OVRCubemapCapture.cs
+Assets/OVR/Scripts/Util/OVRDebugInfo.cs
+Assets/OVR/Scripts/Util/OVRGrabbable.cs
+Assets/OVR/Scripts/Util/OVRGrabber.cs
+Assets/OVR/Scripts/Util/OVRGridCube.cs
+Assets/OVR/Scripts/Util/OVRModeParms.cs
+Assets/OVR/Scripts/Util/OVRMonoscopic.cs
+Assets/OVR/Scripts/Util/OVRPlayerController.cs
+Assets/OVR/Scripts/Util/OVRResetOrientation.cs
+Assets/OVR/Scripts/Util/OVRRTOverlayConnector.cs
+Assets/OVR/Scripts/Util/OVRSceneSampleController.cs
+Assets/OVR/Scripts/Util/OVRScreenFade.cs
+Assets/OVR/Scripts/Util/OVRWaitCursor.cs
+Assets/PyroParticles/Demo/DemoScript.cs
+Assets/PyroParticles/Demo/DemoScriptEditor.cs
+Assets/PyroParticles/Prefab/Script/FireBaseScript.cs
+Assets/PyroParticles/Prefab/Script/FireCollisionForwardScript.cs
+Assets/PyroParticles/Prefab/Script/FireConstantBaseScript.cs
+Assets/PyroParticles/Prefab/Script/FireLightScript.cs
+Assets/PyroParticles/Prefab/Script/FireProjectileScript.cs
+Assets/PyroParticles/Prefab/Script/MeteorSwarmScript.cs
+Assets/PyroParticles/Prefab/Script/SingleLineAttribute.cs
+Assets/Resources/CurvedBlaster.cs
+Assets/Resources/CurvedComponent.cs
+Assets/Resources/CurvedProjectile.cs
+Assets/Resources/PlayerCurvedShot.cs
+Assets/Resources/Sword.cs
+Assets/Resources/trackingSphere.cs
+Assets/Resources/ZigzagBlaster.cs
+Assets/Resources/ZigzagLazer.cs
+"Assets/SciFi level 2/Standard Assets/Character Controllers/Sources/Scripts/MouseLook.cs"
+"Assets/SciFi level 2/Standard Assets/Image Effects (Pro Only)/BlurEffect.cs"
+"Assets/SciFi level 2/Standard Assets/Image Effects (Pro Only)/ColorCorrectionEffect.cs"
+"Assets/SciFi level 2/Standard Assets/Image Effects (Pro Only)/ContrastStretchEffect.cs"
+"Assets/SciFi level 2/Standard Assets/Image Effects (Pro Only)/EdgeDetectEffect.cs"
+"Assets/SciFi level 2/Standard Assets/Image Effects (Pro Only)/GlowEffect.cs"
+"Assets/SciFi level 2/Standard Assets/Image Effects (Pro Only)/GrayscaleEffect.cs"
+"Assets/SciFi level 2/Standard Assets/Image Effects (Pro Only)/ImageEffectBase.cs"
+"Assets/SciFi level 2/Standard Assets/Image Effects (Pro Only)/ImageEffects.cs"
+"Assets/SciFi level 2/Standard Assets/Image Effects (Pro Only)/MotionBlur.cs"
+"Assets/SciFi level 2/Standard Assets/Image Effects (Pro Only)/NoiseEffect.cs"
+"Assets/SciFi level 2/Standard Assets/Image Effects (Pro Only)/SepiaToneEffect.cs"
+"Assets/SciFi level 2/Standard Assets/Image Effects (Pro Only)/SSAOEffect.cs"
+"Assets/SciFi level 2/Standard Assets/Image Effects (Pro Only)/TwirlEffect.cs"
+"Assets/SciFi level 2/Standard Assets/Image Effects (Pro Only)/VortexEffect.cs"
+Assets/Scripts/Ability.cs
+Assets/Scripts/AILibrary.cs
+Assets/Scripts/AlertPosition.cs
+Assets/Scripts/AsgoreAI.cs
+Assets/Scripts/BeamProjectile.cs
+Assets/Scripts/BlasterSeries.cs
+Assets/Scripts/CanonSeries.cs
+Assets/Scripts/ChangeScene.cs
+Assets/Scripts/CrossheirScript.cs
+Assets/Scripts/DebugParts.cs
+Assets/Scripts/DefensePowerups.cs
+Assets/Scripts/DelayedKill.cs
+Assets/Scripts/DudBlasterSeries.cs
+Assets/Scripts/ElasticHUDScript.cs
+Assets/Scripts/flush.cs
+Assets/Scripts/GameManager.cs
+Assets/Scripts/GrabScript.cs
+Assets/Scripts/Interactable.cs
+Assets/Scripts/LightningAI.cs
+Assets/Scripts/MagicPowerups.cs
+Assets/Scripts/MainMenuScript.cs
+Assets/Scripts/MenuButtonHighligher.cs
+Assets/Scripts/MenuChoice.cs
+Assets/Scripts/NewBossAI.cs
+Assets/Scripts/NewPlayerHealthDisplay.cs
+Assets/Scripts/newPlayerInfo.cs
+Assets/Scripts/NewTheme.cs
+Assets/Scripts/PapyrusAI.cs
+Assets/Scripts/PapyrusTutorialAI.cs
+Assets/Scripts/PlayerHealthDisplay.cs
+Assets/Scripts/PlayerInfo.cs
+Assets/Scripts/PlayerProjectile.cs
+Assets/Scripts/Projectile.cs
+Assets/Scripts/RadialButton_old.cs
+Assets/Scripts/RadialMenu.cs
+Assets/Scripts/RadialMenu_old.cs
+Assets/Scripts/RadialMenuHandler.cs
+Assets/Scripts/RadialMenuSpawner_old.cs
+Assets/Scripts/SansAI.cs
+Assets/Scripts/Shield.cs
+Assets/Scripts/Spawner.cs
+Assets/Scripts/Speech.cs
+Assets/Scripts/teleportation.cs
+Assets/Scripts/Throwfireball.cs
+Assets/Scripts/UndyneAI.cs
+"Assets/SpaceSkies Free/Demo/Scripts/LookCamera.cs"
+"Assets/SpaceSkies Free/Demo/Scripts/SkyboxChanger.cs"
+Assets/VolumetricLines/ExampleScenes/ExampleScripts/CannonBehavior.cs
+Assets/VolumetricLines/ExampleScenes/ExampleScripts/CreateSinShapedLineStrip.cs
+Assets/VolumetricLines/ExampleScenes/ExampleScripts/ShotBehavior.cs
+Assets/VolumetricLines/Scripts/SetFovGlobalShaderVariable.cs
+Assets/VolumetricLines/Scripts/Utils/ExposePropertyAttribute.cs
+Assets/VolumetricLines/Scripts/Utils/TransformExtensionMethods.cs
+Assets/VolumetricLines/Scripts/VolumetricLineBehavior.cs
+Assets/VolumetricLines/Scripts/VolumetricLineStripBehavior.cs
+Assets/VolumetricLines/Scripts/VolumetricMultiLineBehavior.cs
+-r:"C:\Program Files\Unity\Editor\Data\MonoBleedingEdge\lib\mono\2.0-api\System.Runtime.Serialization.dll"
+-r:"C:\Program Files\Unity\Editor\Data\MonoBleedingEdge\lib\mono\2.0-api\System.Xml.Linq.dll"
+-r:"C:\Program Files\Unity\Editor\Data\MonoBleedingEdge\lib\mono\2.0-api\UnityScript.dll"
+-r:"C:\Program Files\Unity\Editor\Data\MonoBleedingEdge\lib\mono\2.0-api\UnityScript.Lang.dll"
+-r:"C:\Program Files\Unity\Editor\Data\MonoBleedingEdge\lib\mono\2.0-api\Boo.Lang.dll"
+-sdk:2.0

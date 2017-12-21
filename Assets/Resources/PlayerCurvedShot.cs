@@ -82,6 +82,11 @@ public class PlayerCurvedShot : MonoBehaviour {
             {
                 damageText.GetComponent<TextMesh>().text = "Miss";
                 Object.Destroy(this.gameObject);
+                GameObject[] tmp = GameObject.FindGameObjectsWithTag("Crossheir");
+                for (int i = 0; i < tmp.Length; i++)
+                {
+                    Destroy(tmp[i]);
+                }
             }
         }
         else

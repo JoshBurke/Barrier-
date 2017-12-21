@@ -296,6 +296,10 @@ public class MainMenuScript : MonoBehaviour {
         {
             GameObject.Destroy(tmp);
         }
+
+        GameObject.Find("LeftShield").GetComponent<Shield>().disableSword();
+        GameObject.Find("RightShield").GetComponent<Shield>().disableSword();
+        GameObject.Find("teleportationManager").GetComponent<teleportation>().disableTeleportation();
     }
 
     public void GameOver()
@@ -420,6 +424,8 @@ public class MainMenuScript : MonoBehaviour {
                 SceneManager.LoadScene(1);
                 GameObject n = (GameObject)Instantiate(Resources.Load("NewBoss"));
                 n.GetComponent<AILibrary>().RegisterAttackButtons(fightButton, mercyButton);
+                defenseScript.Enable();
+                defenseScript.ResetAvailability();
             }
             else if (undyneButtonHighlighter.IsHovered())
             {

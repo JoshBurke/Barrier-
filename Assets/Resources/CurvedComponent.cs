@@ -48,6 +48,7 @@ public class CurvedComponent : MonoBehaviour
     {
         Collider collider = collision.collider;
         GameObject other = collider.gameObject;
+        print(other.name);
         if (other.tag == "Crossheir")
         {
             Vector3 contactPoint = collision.contacts[0].point;
@@ -63,6 +64,12 @@ public class CurvedComponent : MonoBehaviour
             damage = Mathf.Max(0.0f, damage);
             GameObject.FindGameObjectWithTag("Enemy").GetComponent<AILibrary>().GiveRawDamage(damage);
             Object.Destroy(this.transform.parent.gameObject);
+            //GameObject.FindGameObjectWithTag("Enemy").GetComponent<AILibrary>
+            GameObject[] tmp = GameObject.FindGameObjectsWithTag("Crossheir");
+            for(int i = 0; i < tmp.Length; i++)
+            {
+                Destroy(tmp[i]);
+            }
         }
     }
 }

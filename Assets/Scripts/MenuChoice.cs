@@ -18,11 +18,11 @@ public class MenuChoice : MonoBehaviour {
         {
             if (available)
             {
-                icon.GetComponent<SpriteRenderer>().color = Color.black;
+                icon.GetComponent<SpriteRenderer>().enabled = true;
             }
             else
             {
-                icon.GetComponent<SpriteRenderer>().color = (Color.red / 2) + (Color.grey / 2);
+                icon.GetComponent<SpriteRenderer>().enabled = false;
             }
         }
     }

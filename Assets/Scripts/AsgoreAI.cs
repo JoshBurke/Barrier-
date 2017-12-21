@@ -48,7 +48,6 @@ public class AsgoreAI : MonoBehaviour
         curvedBlaster = (GameObject)Resources.Load("CurvedBlaster");
         zigzagGaster = (GameObject)Resources.Load("ZigzagGasterBlaster");
         trackingSphere = (GameObject)Resources.Load("TrackingSphereGameObject");
-        print(trackingSphere);
 
         GameObject.Find("teleportationManager").GetComponent<teleportation>().enableTeleportation();
     }

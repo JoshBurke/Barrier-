@@ -223,6 +223,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25f28bd91a85b4c4a99dcbdb9ec773c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerInfo: {fileID: 0}
+  newplayerInfo: {fileID: 595439376}
   rightShield: {fileID: 255249756}
   currPowerUp: 0
   MagnetAvailable: 1
@@ -231,6 +233,8 @@ MonoBehaviour:
   ShieldAvailable: 1
   screenTint: {fileID: 1246963585}
   music: {fileID: 820753755}
+  explosionTransform: {fileID: 1673826307}
+  explosion: {fileID: 100000, guid: e0dc4d47bced6d54ab1461804114b5d0, type: 2}
 --- !u!114 &88254967
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -259,6 +263,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d7a5677ec09376459ebead97ec348c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DEFENSE_ENABLED: 1
+  MAGIC_ENABLED: 1
   leftShield: {fileID: 172504858}
   radialMenu: {fileID: 1647815272559648, guid: de82c9cda20e9c142bc754dc361cea6c, type: 2}
   magicRadialMenu: {fileID: 1290037871547712, guid: 2eee3c4c8474fa34aa7c5bab2010c709,
@@ -19786,6 +19792,34 @@ Light:
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!1 &1673826306
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1673826307}
+  m_Layer: 0
+  m_Name: Explosion Transform
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1673826307
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1673826306}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 4}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1674583683
 GameObject:
   m_ObjectHideFlags: 0

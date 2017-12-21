@@ -316,7 +316,8 @@ public class AILibrary : MonoBehaviour {
             }
         }
     }
-    /*private void enableFireBallThrow()
+    /*
+    private void enableFireBallThrow()
     {
         canThrowFireBall = true;
         print("here!");
@@ -467,8 +468,8 @@ public class AILibrary : MonoBehaviour {
                     isPlayerAttacking = false;
                     isPlayerShotLive = false;
                     isAttackTimeFrozen = false;
-                    Object.Destroy(leftCrossheir);
-                    Object.Destroy(rightCrossheir);
+                    //Object.Destroy(leftCrossheir);
+                    //Object.Destroy(rightCrossheir);
                     Invoke("clearDamageText", 3.0f);
                     if (attackCallback != null)
                         attackCallback();
@@ -549,17 +550,20 @@ public class AILibrary : MonoBehaviour {
 
     private void cleanUp()
     {
+        print("5");
         if (initAttackButtonPos != null)
         {
             resetAttackButtons();
         }
         GameObject.Find("MainMenu").GetComponent<MainMenuScript>().OpenMenu(isDead);
-        GameObject pointer = GameObject.Find("PlayerSword(Clone)");
-        if (pointer != null)
+        GameObject sword = GameObject.Find("PlayerSword(Clone)");
+        if (sword != null)
         {
-            Object.Destroy(pointer);
+            Object.Destroy(sword);
         }
         GameObject.Find("teleportationManager").GetComponent<teleportation>().disableTeleportation();
+        GameObject.Find("LeftShield").GetComponent<Shield>().disableSword();
+        GameObject.Find("RightShield").GetComponent<Shield>().disableSword();
         Object.Destroy(this.gameObject);
     }
 

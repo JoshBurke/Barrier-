@@ -51,9 +51,16 @@ public class NewTheme : MonoBehaviour
     private GameObject RadialMenu;
     private MenuButtonHighligher RadialMenuHighlighter;
 
+    private DefensePowerups defenseScript;
+
     void Start()
     {
         //current = SceneManager.GetActiveScene();
+        defenseScript = GameObject.Find("OVRPlayerController").GetComponent<DefensePowerups>();
+        defenseScript.Enable();
+        defenseScript.ResetAvailability();
+        defenseScript.SetAvailablePowerups(true, true, true, false);
+
         player = GameObject.FindGameObjectWithTag("Player");
         playerInfo = player.GetComponent<newPlayerInfo>();
         playerController = GameObject.Find("OVRPlayerController").GetComponent<OVRPlayerController>();

@@ -8,6 +8,7 @@ public class DefensePowerups : MonoBehaviour {
     /** Variables essential for script generic function **/
 
     public PlayerInfo playerInfo;
+    public newPlayerInfo newplayerInfo;
     public GameObject rightShield;
 
     public enum PowerUp { NONE, MAGNET, BOOM, SLOW, SHIELD}
@@ -43,8 +44,9 @@ public class DefensePowerups : MonoBehaviour {
     {
         if (!rightShield)
             rightShield = GameObject.Find("RightShield");
-        if (!playerInfo)
-            playerInfo = GameObject.Find("playerCollider").GetComponent<PlayerInfo>();
+        //if (!playerInfo)
+            //playerInfo = GameObject.Find("playerCollider").GetComponent<PlayerInfo>();
+        
         areProjectilesReset = true;
         particles = rightShield.GetComponent<ParticleSystem>();
     }
@@ -225,7 +227,10 @@ public class DefensePowerups : MonoBehaviour {
 
     void Shield()
     {
-        playerInfo.GiveShield(shieldAmount);
+        if(playerInfo != null)
+            playerInfo.GiveShield(shieldAmount);
+        if (newplayerInfo != null)
+            newplayerInfo.GiveShield(shieldAmount);
         ShieldAvailable = false;
     }
 
